@@ -15,7 +15,7 @@ export const AuthProvider= ({ children }) => {
         user,
         login: () => {
           //set user credential to context
-          const fakeUser = { username: "bob" };
+          const fakeUser = { username: "Bernard" };
           setUser(fakeUser);
           AsyncStorage.setItem("user", JSON.stringify(fakeUser));
         },

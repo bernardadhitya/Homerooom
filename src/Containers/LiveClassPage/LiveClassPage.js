@@ -4,7 +4,6 @@ import { Text, TouchableOpacity, View, SafeAreaView } from "react-native";
 import { Fonts } from "../../Constants/Fonts";
 import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
-import IconAssignments from '../../Assets/icons/IconAssignments';
 
 const { Bold } = Fonts;
 

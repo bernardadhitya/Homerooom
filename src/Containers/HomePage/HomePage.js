@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { Text, TouchableOpacity, View, SafeAreaView } from "react-native";
 import { Fonts } from "../../Constants/Fonts";
 import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
-import IconAssignments from '../../Assets/icons/IconAssignments';
+import { AuthContext } from "../../Helper/AuthProvider";
+import IconNotification from "../../Assets/icons/IconNotification";
 
 const { Bold } = Fonts;
 
 const Stack = createStackNavigator();
 
 const Feed = () => {
+  const { user: { username } } = useContext(AuthContext);
+
   let [fontsLoaded] = useFonts(Fonts);
   
   if (!fontsLoaded) {
@@ -40,7 +43,10 @@ const Feed = () => {
               marginLeft: 10,
             }}
           >
-            <Text style={{ fontFamily: 'Bold', fontSize: 21 }}>Home</Text>
+            <Text style={{ fontFamily: 'Medium', fontSize: 14 }}>Hi, {username}!</Text>
+          </View>
+          <View>
+            <IconNotification />
           </View>
         </View>
       </SafeAreaView>
