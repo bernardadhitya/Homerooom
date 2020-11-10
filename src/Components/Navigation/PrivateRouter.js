@@ -22,7 +22,8 @@ const PrivateRouter = () => {
       appearence={{
         floating: true,
         activeTabBackgrounds: ['#FFF4CD', '#FFE9E5', '#E5FCFB', '#F2FFD7'],
-        activeColors: ['#D9AB0A', '#EF5B54', '#56BBB4', '#9DCC39']
+        activeColors: ['#D9AB0A', '#EF5B54', '#56BBB4', '#9DCC39'],
+        shadow: true
       }}
     >
       <Tabs.Screen

@@ -1,9 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import { Text, TouchableOpacity, View, SafeAreaView } from "react-native";
+import { Text, TouchableOpacity, View, SafeAreaView, StyleSheet } from "react-native";
 import { Fonts } from "../../Constants/Fonts";
 import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
+import { ScrollView } from 'react-native';
+import { Layout } from 'react-native-ui-kitten';
+import OnlineNowContent from '../../Components/LiveClassPanel/OnlineNowContent';
+import YourClassesContent from '../../Components/LiveClassPanel/YourClassesContent';
 
 const { Bold } = Fonts;
 
@@ -19,29 +23,35 @@ const Feed = () => {
       <SafeAreaView
         style={{
           flex: 1,
+          backgroundColor: '#EDF1F7'
         }}
       >
-        <View
+        <ScrollView
           style={{
-            flex: 1,
-            flexDirection: 'row',
-            marginTop: 30,
-            marginRight: 10,
-            marginLeft: 10,
-            marginBottom: 0,
+            marginHorizontal: 20,
           }}
         >
           <View
             style={{
-              marginTop: 0,
-              marginRight: 10,
-              marginBottom: 0,
-              marginLeft: 10,
+              flex: 1,
+              flexDirection: 'row',
+              marginTop: 30
             }}
           >
-            <Text style={{ fontFamily: 'Bold', fontSize: 21 }}>Live Class</Text>
+            <View>
+              <Text style={{ fontFamily: 'Bold', fontSize: 21 }}>Live Class</Text>
+            </View>
           </View>
-        </View>
+          <Layout style={{marginTop: 20}}level='3'>
+            <Text style={{fontFamily: 'Bold', fontSize: 16}}>Online Now</Text>
+            <OnlineNowContent/>
+          </Layout>
+          <Layout style={{marginVertical: 20}}level='3'>
+            <Text style={{fontFamily: 'Bold', fontSize: 16}}>Your Classes</Text>
+            <YourClassesContent/>
+          </Layout>
+          <View style={{height: 100}}></View>
+        </ScrollView>
       </SafeAreaView>
     )
   }
@@ -58,23 +68,26 @@ const LiveClassPage = () => {
     >
       <Stack.Screen
         name="Live Class"
-        options={{
-          headerRight: () => {
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  logout();
-                }}
-              >
-                <Text>LOGOUT</Text>
-              </TouchableOpacity>
-            );
-          }
-        }}
         component={Feed}
       />
     </Stack.Navigator>
   )
 }
+
+const styles = StyleSheet.create({
+  column: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  layout: {
+    flex: 1,
+    justifyContent: 'center',
+    marginVertical: 10
+  },
+});
 
 export default LiveClassPage;
