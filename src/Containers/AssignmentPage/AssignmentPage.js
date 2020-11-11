@@ -9,7 +9,7 @@ import AssignmentCard from '../../Components/AssignmentPanel/AssignmentCard';
 import AssignmentTabButton from '../../Components/AssignmentPanel/AssignmentTabButton';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
-import CharacterMrTeacher from '../../Assets/characters/CharacterMrTeacher';
+import MySubmissionCard from '../../Components/AssignmentPanel/MySubmissionCard';
 
 const { Bold } = Fonts;
 
@@ -54,11 +54,12 @@ const Feed = () => {
       style={{
         backgroundColor: 'white',
         padding: 16,
-        height: 650,
+        height: 750,
       }}
     >
       <Text style={{fontFamily: 'Bold', fontSize: 21}}>Assignments</Text>
       <AssignmentCard detail/>
+      <MySubmissionCard/>
     </Layout>
   );
 
@@ -104,7 +105,7 @@ const Feed = () => {
       >
         <BottomSheet
           ref={sheetRef}
-          snapPoints={[500, -100, -100]}
+          snapPoints={[600, 500, -100]}
           borderRadius={16}
           renderContent={renderContent}
           initialSnap={2}
