@@ -15,13 +15,14 @@ import IconNotification from "../../Assets/icons/IconNotification";
 import HomePanel from '../../Components/HomePanel/HomePanel';
 import { Layout } from 'react-native-ui-kitten';
 import { View } from 'react-native';
+import IconLogout from '../../Assets/icons/IconLogout';
 
 const { Bold } = Fonts;
 
 const Stack = createStackNavigator();
 
 const Feed = () => {
-  const { user: { username } } = useContext(AuthContext);
+  const { user: { username }, logout } = useContext(AuthContext);
 
   let [fontsLoaded] = useFonts(Fonts);
   
@@ -37,7 +38,7 @@ const Feed = () => {
       >
         <ScrollView
           style={{
-            marginHorizontal: 20,
+            paddingHorizontal: 20,
           }}
         >
           <Layout
@@ -46,22 +47,40 @@ const Feed = () => {
               flexDirection: 'row',
               justifyContent: "center",
               marginTop: 30,
-              marginBottom: 0
+              marginBottom: 16
             }}
             level='3'
           >
-            <Layout style={{ flex: 1 }} level='3'>
-              <Text style={{ fontFamily: 'Medium', fontSize: 14 }}>Hi, {username}!</Text>
-            </Layout>
-            <Layout
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "flex-end"
-              }}
-              level='3'
-            >
-              <IconNotification />
+            <Layout style={styles.container} level='3'>
+              <TouchableOpacity style={{
+                marginRight: 10,
+                paddingTop: 14,
+                paddingHorizontal: 10,
+                backgroundColor: '#FDD444',
+                borderRadius: 8
+              }}>
+                <Text style={{fontSize: 16}}>🦊</Text>
+              </TouchableOpacity>
+              <View style={{
+                paddingTop: 14,
+                paddingBottom: 6,
+                paddingHorizontal: 10
+              }}>
+                <Text style={{ fontFamily: 'Medium', fontSize: 16 }}>Hi, {username}!</Text>
+              </View>
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  marginTop: 10
+                }}
+                onPress={() => {
+                  logout();
+                }}
+              >
+                <IconLogout />
+              </TouchableOpacity>
             </Layout>
           </Layout>
           <Layout style={styles.layout} level='3'>
@@ -81,6 +100,8 @@ const Feed = () => {
 }
 
 const HomePage = () => {
+  const { logout } = useContext(AuthContext);
+
   return (
     <Stack.Navigator
       initialRouteName="Home"
