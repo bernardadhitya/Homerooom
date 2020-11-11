@@ -11,7 +11,7 @@ import GamePage from "../../Containers/GamesPage/GamePage";
 
 const Tabs = AnimatedTabBarNavigator();
 
-const PrivateRouter = () => {
+const TeacherRouter = () => {
 
   return (
     <Tabs.Navigator
@@ -51,4 +51,4 @@ const PrivateRouter = () => {
   );
 };
 
-export default PrivateRouter;
+export default TeacherRouter;

@@ -9,6 +9,7 @@ import Center from "../Center/Center";
 import { AuthContext } from "../../Helper/AuthProvider";
 import PrivateRouter from "./PrivateRouter";
 import AuthenticationRouter from "./AuthenticationRouter";
+import TeacherRouter from "./TeacherRouter";
 
 export const Routes = () => {
   const { user, login } = useContext(AuthContext);
@@ -37,9 +38,18 @@ export const Routes = () => {
     );
   }
 
+  const renderRouter = () => {
+    const routers = {
+      student: <PrivateRouter />,
+      teacher: <TeacherRouter />
+    }
+
+    return user ? routers[user.role] : <AuthenticationRouter />
+  }
+
   return (
     <NavigationContainer>
-      {user ? <PrivateRouter /> : <AuthenticationRouter />}
+      { renderRouter() }
     </NavigationContainer>
   );
 };
