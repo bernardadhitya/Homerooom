@@ -12,9 +12,15 @@ function Login({ navigation }) {
     <Center>
       <Text>I am a login screen</Text>
       <Button
-        title="log me in"
+        title="log me as student"
         onPress={() => {
-          login();
+          login('student');
+        }}
+      />
+      <Button
+        title="log in as teacher"
+        onPress={() => {
+          login('teacher');
         }}
       />
       <Button
