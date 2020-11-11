@@ -7,9 +7,10 @@ import { AppLoading } from 'expo';
 import CharacterMrTeacher from '../../Assets/characters/CharacterMrTeacher';
 import IconImageAttachment from '../../Assets/icons/IconImageAttachment';
 import { TouchableOpacity } from 'react-native';
+import MySubmissionCardContent from './MySubmissionCardContent';
 
 const MySubmissionCard = (props) => {
-  const {detail} = props;
+  const {detail, status} = props;
   let [fontsLoaded] = useFonts(Fonts);
 
   return fontsLoaded ? (
@@ -34,7 +35,7 @@ const MySubmissionCard = (props) => {
           <View style={styles.row}>
             <View style={styles.col}>
               <Text style={{fontFamily: 'Medium', fontSize: 12}}>
-                Play “Marry Has a Little Lamb”
+                My Submission
               </Text>
             </View>
             <View style={{flex: 1}}>
@@ -42,42 +43,14 @@ const MySubmissionCard = (props) => {
                 fontFamily: 'Medium',
                 fontSize: 12,
                 textAlign: 'right',
-                color: '#9CCB38'
+                color: '#9CCB38',
+                textTransform: 'capitalize'
               }}>
-                Assigned
+                {status}
               </Text>
             </View>
           </View>
-          <View style={styles.col}>
-            <Text style={{fontFamily: 'Regular', fontSize: 10, color: '#EF5B54'}}>
-              Don’t forget to submit your assignment before due date!
-            </Text>
-          </View>
-          <TouchableOpacity onPress={() => console.log('pressed')}>
-            <View style={styles.center, {
-              marginTop: 16,
-              alignItems: 'center',
-              paddingTop: 10,
-              paddingBottom: 4,
-              borderColor: '#63C7FD',
-              borderWidth: 1,
-              borderRadius: 8
-            }}>
-              <Text style={{fontFamily: 'Medium', fontSize: 12, color: '#63C7FD'}}>+ Add Submission</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('pressed')}>
-            <View style={styles.center, {
-              marginTop: 12,
-              alignItems: 'center',
-              paddingTop: 10,
-              paddingBottom: 4,
-              backgroundColor: '#63C7FD',
-              borderRadius: 8
-            }}>
-              <Text style={{fontFamily: 'Medium', fontSize: 12, color: '#FFFFFF'}}>Finalize</Text>
-            </View>
-          </TouchableOpacity>
+          <MySubmissionCardContent status={status}/>
         </View>
       </View>
     </View>

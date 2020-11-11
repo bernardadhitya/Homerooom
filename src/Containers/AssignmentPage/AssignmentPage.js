@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import { Text, TouchableOpacity, View, SafeAreaView, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, View, SafeAreaView, StyleSheet, ScrollView } from 'react-native';
 import { Fonts } from "../../Constants/Fonts";
 import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
@@ -10,6 +10,7 @@ import AssignmentTabButton from '../../Components/AssignmentPanel/AssignmentTabB
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import MySubmissionCard from '../../Components/AssignmentPanel/MySubmissionCard';
+import { useMemoOne } from 'use-memo-one';
 
 const { Bold } = Fonts;
 
@@ -43,32 +44,32 @@ const GradedTab = () => {
 }
 
 const Feed = () => {
-  const [selectedTab, setSelectedTab] = useState('Assigned');
+  const [selectedTab, setSelectedTab] = useState('assigned');
   let [fontsLoaded] = useFonts(Fonts);
 
   let sheetRef = useRef(null);
-  let fall = new Animated.Value(1);
+  let fall = useMemoOne(() => new Animated.Value(1), []);
   
   const renderContent = () => (
     <Layout
       style={{
         backgroundColor: 'white',
         padding: 16,
-        height: 750,
+        height: 900
       }}
     >
       <Text style={{fontFamily: 'Bold', fontSize: 21}}>Assignments</Text>
       <AssignmentCard detail/>
-      <MySubmissionCard/>
+      <MySubmissionCard status={selectedTab}/>
     </Layout>
   );
 
   const renderAssignmentTabButton = (title) => {
-    const isActive = selectedTab === title;
+    const isActive = selectedTab === title.toLowerCase();
     const active = isActive ? 'active' : 'inactive';
   
     return (
-      <TouchableOpacity onPress={() => setSelectedTab(title)}>
+      <TouchableOpacity onPress={() => setSelectedTab(title.toLowerCase())}>
         <AssignmentTabButton active={active} title={title}/>
       </TouchableOpacity>
     )
@@ -105,17 +106,13 @@ const Feed = () => {
       >
         <BottomSheet
           ref={sheetRef}
-          snapPoints={[600, 500, -100]}
-          borderRadius={16}
-          renderContent={renderContent}
           initialSnap={2}
           callbackNode={fall}
+          snapPoints={[600, 500, -100]}
+          renderContent={renderContent}
+          borderRadius={16}
         />
-        <Animated.ScrollView
-          style={{
-            marginHorizontal: 20,
-            opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-          }}
+        <ScrollView style={{marginHorizontal: 20}}
         >
           <View
             style={{
@@ -139,7 +136,13 @@ const Feed = () => {
             { renderAssignmentTabButton('Graded') }
           </View>
           <Layout style={{marginTop: 20}}level='3'>
-            <Text style={{fontFamily: 'Bold', fontSize: 16}}>{selectedTab}</Text>
+            <Text style={{
+              fontFamily: 'Bold',
+              fontSize: 16,
+              textTransform: 'capitalize'
+            }}>
+              {selectedTab}
+            </Text>
             <TouchableOpacity onPress={() => sheetRef.current.snapTo(0)}>
               <AssignmentCard/>
             </TouchableOpacity>
@@ -147,7 +150,7 @@ const Feed = () => {
             <AssignmentCard/>
           </Layout>
           <View style={{height: 100}}></View>
-        </Animated.ScrollView>
+        </ScrollView>
         {renderShadow()}
       </SafeAreaView>
     )
