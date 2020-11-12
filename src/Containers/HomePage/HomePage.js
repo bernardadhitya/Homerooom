@@ -11,7 +11,6 @@ import { Fonts } from "../../Constants/Fonts";
 import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
 import { AuthContext } from "../../Helper/AuthProvider";
-import IconNotification from "../../Assets/icons/IconNotification";
 import HomePanel from '../../Components/HomePanel/HomePanel';
 import { Layout } from 'react-native-ui-kitten';
 import { View } from 'react-native';
