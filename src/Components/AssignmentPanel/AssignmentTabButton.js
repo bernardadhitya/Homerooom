@@ -33,7 +33,8 @@ const AssignmentTabButton = (props) => {
       <Text style={{
         fontFamily: 'Medium',
         fontSize: 14,
-        color: buttonStyles[active].color
+        color: buttonStyles[active].color,
+        textAlign: 'center'
       }}>
         {title}
       </Text>

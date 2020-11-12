@@ -18,10 +18,6 @@ import { Layout } from '@ui-kitten/components';
 import CreateAssignmentForm from '../../Components/TeacherClassAssignmentPanel/CreateAssignmentForm';
 import AddStudentForm from '../../Components/TeacherClassStudentPanel/AddStudentForm';
 
-const { Bold } = Fonts;
-
-const Stack = createStackNavigator();
-
 const actions = [
   {
     text: "Create",
@@ -61,7 +57,10 @@ const TeacherClassPage = ({navigation, route}) => {
     const active = isActive ? 'active' : 'inactive';
   
     return (
-      <TouchableOpacity onPress={() => setSelectedTab(title.toLowerCase())}>
+      <TouchableOpacity
+        style={{ flex: 1 }}
+        onPress={() => setSelectedTab(title.toLowerCase())}
+      >
         <AssignmentTabButton active={active} title={title}/>
       </TouchableOpacity>
     )

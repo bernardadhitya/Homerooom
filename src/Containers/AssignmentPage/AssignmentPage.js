@@ -69,7 +69,10 @@ const Feed = () => {
     const active = isActive ? 'active' : 'inactive';
   
     return (
-      <TouchableOpacity onPress={() => setSelectedTab(title.toLowerCase())}>
+      <TouchableOpacity
+        style={{ flex: 1 }}
+        onPress={() => setSelectedTab(title.toLowerCase())}
+      >
         <AssignmentTabButton active={active} title={title}/>
       </TouchableOpacity>
     )

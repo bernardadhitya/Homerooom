@@ -6,6 +6,8 @@ import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import TeacherClassAssignmentCard from './TeacherClassAssignmentCard';
 import { FloatingAction } from 'react-native-floating-action';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const actions = [
   {
@@ -17,13 +19,22 @@ const actions = [
 ];
 
 const TeacherClassAssignmentPanel = () => {
+  const navigation = useNavigation();
   let [fontsLoaded] = useFonts(Fonts);
 
   return fontsLoaded ? (
     <Layout level='3'>
-      <TeacherClassAssignmentCard/>
-      <TeacherClassAssignmentCard/>
-      <TeacherClassAssignmentCard/>
+      <TouchableOpacity
+        onPress={() => {navigation.navigate('Assignments')}}
+      >
+        <TeacherClassAssignmentCard/>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <TeacherClassAssignmentCard/>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <TeacherClassAssignmentCard/>
+      </TouchableOpacity>
     </Layout>
   ) : <AppLoading/>;
 }

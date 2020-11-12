@@ -1,7 +1,6 @@
 import React from 'react';
 import { useFonts } from '@use-expo/font';
 import { View, Text, StyleSheet } from 'react-native';
-import { Layout } from '@ui-kitten/components';
 import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import CharacterMrTeacher from '../../Assets/characters/CharacterMrTeacher';
