@@ -45,7 +45,7 @@ const TeacherHomePage = ({ navigation, route }) => {
       style={{
         backgroundColor: 'white',
         padding: 16,
-        height: 900
+        height: 700
       }}
     >
       <Text style={{fontFamily: 'Bold', fontSize: 21}}>Create Class</Text>
@@ -85,7 +85,7 @@ const TeacherHomePage = ({ navigation, route }) => {
           ref={sheetRef}
           initialSnap={2}
           callbackNode={fall}
-          snapPoints={[600, 500, -100]}
+          snapPoints={[620, 500, -100]}
           renderContent={renderContent}
           borderRadius={16}
         />

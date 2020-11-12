@@ -7,9 +7,10 @@ import { AppLoading } from 'expo';
 import CharacterMrTeacher from '../../Assets/characters/CharacterMrTeacher';
 
 const data = [
-  'Developer',
-  'Designer',
-  'Product Manager'
+  'Bernard',
+  'Kim',
+  'Beatrice',
+  'Jasmine'
 ];
 
 const CreateClassForm = () => {
@@ -18,10 +19,22 @@ const CreateClassForm = () => {
   const [selectedStudents, setSelectedStudents] = useState([]);
   let [fontsLoaded] = useFonts(Fonts);
 
+  const displayValue = () => {
+    const selectedStudentsName = selectedStudents.map(({row}) => (data[row]));
+    return <Text>{selectedStudentsName.join(', ')}</Text>;
+  };
+
+  console.log(displayValue);
+
+  const renderStudentsOption = (title) => {
+    return(
+      <SelectItem title={title}/>
+    )
+  };
 
   return fontsLoaded ? (
     <Layout>
-      <View>
+      <View style={{marginVertical: 10}}>
         <Text>
           <Text style={{fontFamily: 'SemiBold', fontSize: 12}}>Class Subject</Text>
           <Text style={{fontFamily: 'SemiBold', fontSize: 12, color: '#EF5B54'}}>*</Text>
@@ -32,7 +45,7 @@ const CreateClassForm = () => {
           onChangeText={value => setClassSubject(value)}
         />
       </View>
-      <View>
+      <View style={{marginVertical: 10}}>
         <Text>
           <Text style={{fontFamily: 'SemiBold', fontSize: 12}}>Class Name</Text>
           <Text style={{fontFamily: 'SemiBold', fontSize: 12, color: '#EF5B54'}}>*</Text>
@@ -43,7 +56,7 @@ const CreateClassForm = () => {
           onChangeText={value => setClassName(value)}
         />
       </View>
-      <View>
+      <View style={{marginVertical: 10}}>
         <Text>
           <Text style={{fontFamily: 'SemiBold', fontSize: 12}}>Class Avatar</Text>
           <Text style={{fontFamily: 'SemiBold', fontSize: 12, color: '#EF5B54'}}>*</Text>
@@ -63,7 +76,7 @@ const CreateClassForm = () => {
           </Card>
         </ScrollView>
       </View>
-      <View>
+      <View style={{marginVertical: 10}}>
         <Text>
           <Text style={{fontFamily: 'SemiBold', fontSize: 12}}>Class Avatar</Text>
           <Text style={{fontFamily: 'SemiBold', fontSize: 12, color: '#EF5B54'}}>*</Text>
@@ -115,18 +128,30 @@ const CreateClassForm = () => {
             <Text style={{color: '#63C7FD'}}>R</Text>
           </TouchableOpacity>
         </View>
-        <View>
-          <Text style={{fontFamily: 'SemiBold', fontSize: 12}}>Add Students</Text>
-          <Select
-            multiSelect={true}
-            selectedIndex={selectedStudents}
-            onSelect={index => setSelectedStudents(index)}>
-            <SelectItem title='Option 1'/>
-            <SelectItem title='Option 2'/>
-            <SelectItem title='Option 3'/>
-          </Select>
-        </View>
       </View>
+      <View style={{marginVertical: 10}}>
+        <Text style={{fontFamily: 'SemiBold', fontSize: 12}}>Add Students</Text>
+        <Select
+          multiSelect={true}
+          value={displayValue}
+          selectedIndex={selectedStudents}
+          onSelect={index => setSelectedStudents(index)}
+        >
+          {data.map(student => renderStudentsOption(student))}
+        </Select>
+      </View>
+      <TouchableOpacity onPress={() => console.log('pressed')}>
+        <View style={styles.center, {
+          marginTop: 12,
+          alignItems: 'center',
+          paddingTop: 10,
+          paddingBottom: 4,
+          backgroundColor: '#63C7FD',
+          borderRadius: 8
+        }}>
+          <Text style={{fontFamily: 'Medium', fontSize: 12, color: '#FFFFFF'}}>Finalize</Text>
+        </View>
+      </TouchableOpacity>
     </Layout>
   ) : <AppLoading/>;
 }
