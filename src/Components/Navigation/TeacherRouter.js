@@ -10,14 +10,13 @@ const TeacherRouter = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        //header: () => null
+        header: () => null
       }}
       initialRouteName="Home"
     >
       <Stack.Screen
         options={{
-          headerTitle: "Home",
-          headerShown: true
+          headerTitle: "Home"
         }}
         name="Home"
         component={TeacherHomePage}

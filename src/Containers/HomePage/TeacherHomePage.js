@@ -79,6 +79,7 @@ const TeacherHomePage = ({ navigation, route }) => {
       <SafeAreaView
         style={{
           flex: 1,
+          backgroundColor: '#EDF1F7'
         }}
       >
         <BottomSheet
@@ -152,12 +153,6 @@ const TeacherHomePage = ({ navigation, route }) => {
           }}>
             <TeacherClassCard />
           </TouchableOpacity>
-          <Button
-            title="go to assignments"
-            onPress={() => {
-              navigation.navigate("Assignments");
-            }}
-          />
         </ScrollView>
         <FloatingAction
           actions={actions}
