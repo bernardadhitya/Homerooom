@@ -12,7 +12,7 @@ import AuthenticationRouter from "./AuthenticationRouter";
 import TeacherRouter from "./TeacherRouter";
 
 export const Routes = () => {
-  const { user, login } = useContext(AuthContext);
+  const { user, loginAsStudent, loginAsTeacher } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +21,14 @@ export const Routes = () => {
       .then(userString => {
         if (userString) {
           // decode it
-          login();
+          const userJson = JSON.parse(userString);
+          const { role } = userJson;
+
+          if(role === 'student'){
+            loginAsStudent();
+          } else if (role === 'teacher'){
+            loginAsTeacher();
+          }
         }
         setLoading(false);
       })
@@ -38,9 +45,18 @@ export const Routes = () => {
     );
   }
 
+  const renderRouter = () => {
+    const routers = {
+      student: <PrivateRouter />,
+      teacher: <TeacherRouter />
+    }
+
+    return user ? routers[user.role] : <AuthenticationRouter />
+  }
+
   return (
     <NavigationContainer>
-      { user ? <PrivateRouter /> : <AuthenticationRouter/>}
+      { renderRouter() }
     </NavigationContainer>
   );
 };

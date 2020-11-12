@@ -3,7 +3,8 @@ import { AsyncStorage } from "react-native";
 
 export const AuthContext = React.createContext({
   user: null,
-  login: () => {},
+  loginAsStudent: () => {},
+  loginAsTeacher: () => {},
   logout: () => {}
 });
 
@@ -13,11 +14,15 @@ export const AuthProvider= ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        login: () => {
-          //set user credential to context
-          const fakeUser = { username: "Bernard", role: 'student' };
-          setUser(fakeUser);
-          AsyncStorage.setItem("user", JSON.stringify(fakeUser));
+        loginAsStudent: () => {
+          const fakeStudent = { username: "Bernard", role: 'student' };
+          setUser(fakeStudent);
+          AsyncStorage.setItem("user", JSON.stringify(fakeStudent));
+        },
+        loginAsTeacher: () => {
+          const fakeTeacher = { username: "Naomi", role: 'teacher' };
+          setUser(fakeTeacher);
+          AsyncStorage.setItem("user", JSON.stringify(fakeTeacher));
         },
         logout: () => {
           //logs out user

@@ -7,14 +7,20 @@ import { Button, Text } from "react-native";
 const Stack = createStackNavigator();
 
 function Login({ navigation }) {
-  const { login } = useContext(AuthContext);
+  const { loginAsStudent, loginAsTeacher } = useContext(AuthContext);
   return (
     <Center>
       <Text>I am a login screen</Text>
       <Button
-        title="log me in"
+        title="log me in as student"
         onPress={() => {
-          login();
+          loginAsStudent();
+        }}
+      />
+      <Button
+        title="log me in as teacher"
+        onPress={() => {
+          loginAsTeacher();
         }}
       />
       <Button
