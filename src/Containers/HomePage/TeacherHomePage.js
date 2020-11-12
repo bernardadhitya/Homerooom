@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   Text,
@@ -17,6 +17,9 @@ import IconLogout from '../../Assets/icons/IconLogout';
 import { AuthContext } from "../../Helper/AuthProvider";
 import TeacherClassCard from '../../Components/HomePanel/TeacherClassCard';
 import { FloatingAction } from "react-native-floating-action";
+import { useMemoOne } from 'use-memo-one';
+import BottomSheet from 'reanimated-bottom-sheet';
+import Animated from 'react-native-reanimated';
 
 const { Bold } = Fonts;
 
@@ -31,8 +34,41 @@ const actions = [
 
 const TeacherHomePage = ({ navigation, route }) => {
   const { user: { username }, logout } = useContext(AuthContext);
-
   let [fontsLoaded] = useFonts(Fonts);
+
+  let sheetRef = useRef(null);
+  let fall = useMemoOne(() => new Animated.Value(1), []);
+
+  const renderContent = () => (
+    <Layout
+      style={{
+        backgroundColor: 'white',
+        padding: 16,
+        height: 900
+      }}
+    >
+      <Text style={{fontFamily: 'Bold', fontSize: 21}}>Create Class</Text>
+    </Layout>
+  );
+
+  const renderShadow = () => {
+    const animatedShadowOpacity = Animated.interpolate(fall, {
+      inputRange: [0, 1],
+      outputRange: [0.5, 0],
+    })
+
+    return (
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          styles.shadowContainer,
+          {
+            opacity: animatedShadowOpacity,
+          },
+        ]}
+      />
+    )
+  }
   
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -43,6 +79,14 @@ const TeacherHomePage = ({ navigation, route }) => {
           flex: 1,
         }}
       >
+        <BottomSheet
+          ref={sheetRef}
+          initialSnap={2}
+          callbackNode={fall}
+          snapPoints={[600, 500, -100]}
+          renderContent={renderContent}
+          borderRadius={16}
+        />
         <ScrollView
           style={{
             paddingHorizontal: 20
@@ -115,9 +159,7 @@ const TeacherHomePage = ({ navigation, route }) => {
         </ScrollView>
         <FloatingAction
           actions={actions}
-          onPressItem={name => {
-            console.log(`selected button: ${name}`);
-          }}
+          onPressItem={() => sheetRef.current.snapTo(0)}
           overrideWithAction='true'
           color='#FFFFFF'
           shadow={{
@@ -130,6 +172,7 @@ const TeacherHomePage = ({ navigation, route }) => {
             shadowRadius: 2.22,
           }}
         />
+        {renderShadow()}
       </SafeAreaView>
     )
   }
@@ -145,6 +188,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 10
   },
+  column: {
+    flexDirection: 'column',
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  layout: {
+    justifyContent: 'center',
+    marginVertical: 10
+  },
+  center: {
+    justifyContent: 'center',
+  },
+  shadowContainer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#000',
+  }
 });
 
 export default TeacherHomePage;
