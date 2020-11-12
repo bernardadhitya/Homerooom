@@ -23,6 +23,7 @@
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-animated-nav-tab-bar": "^3.0.5",
+    "react-native-floating-action": "^1.21.0",
     "react-native-gesture-handler": "~1.5.0",
     "react-native-reanimated": "~1.4.0",
     "react-native-safe-area-context": "^0.6.0",

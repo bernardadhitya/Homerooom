@@ -16,8 +16,18 @@ import { Layout } from 'react-native-ui-kitten';
 import IconLogout from '../../Assets/icons/IconLogout';
 import { AuthContext } from "../../Helper/AuthProvider";
 import TeacherClassCard from '../../Components/HomePanel/TeacherClassCard';
+import { FloatingAction } from "react-native-floating-action";
 
 const { Bold } = Fonts;
+
+const actions = [
+  {
+    text: "Create Class",
+    icon: require("../../Assets/icons/IconAdd.png"),
+    name: "ButtonCreateClass",
+    position: 1
+  }
+];
 
 const TeacherHomePage = ({ navigation, route }) => {
   const { user: { username }, logout } = useContext(AuthContext);
@@ -103,6 +113,23 @@ const TeacherHomePage = ({ navigation, route }) => {
             }}
           />
         </ScrollView>
+        <FloatingAction
+          actions={actions}
+          onPressItem={name => {
+            console.log(`selected button: ${name}`);
+          }}
+          overrideWithAction='true'
+          color='#FFFFFF'
+          shadow={{
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.22,
+            shadowRadius: 2.22,
+          }}
+        />
       </SafeAreaView>
     )
   }
