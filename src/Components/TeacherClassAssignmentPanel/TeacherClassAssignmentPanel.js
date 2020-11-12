@@ -5,6 +5,16 @@ import { Layout } from '@ui-kitten/components';
 import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import TeacherClassAssignmentCard from './TeacherClassAssignmentCard';
+import { FloatingAction } from 'react-native-floating-action';
+
+const actions = [
+  {
+    text: "Create Class",
+    icon: require("../../Assets/icons/IconAdd.png"),
+    name: "ButtonCreateClass",
+    position: 1
+  }
+];
 
 const TeacherClassAssignmentPanel = () => {
   let [fontsLoaded] = useFonts(Fonts);
