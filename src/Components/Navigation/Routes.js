@@ -38,18 +38,9 @@ export const Routes = () => {
     );
   }
 
-  const renderRouter = () => {
-    const routers = {
-      student: <PrivateRouter />,
-      teacher: <TeacherRouter />
-    }
-
-    return user ? routers[user.role] : <AuthenticationRouter />
-  }
-
   return (
     <NavigationContainer>
-      { renderRouter() }
+      { user ? <PrivateRouter /> : <AuthenticationRouter/>}
     </NavigationContainer>
   );
 };

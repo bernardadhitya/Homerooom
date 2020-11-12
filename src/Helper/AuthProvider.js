@@ -13,14 +13,11 @@ export const AuthProvider= ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        login: (role) => {
+        login: () => {
           //set user credential to context
-          const fakeUsers = {
-            student: { username: "Bernard", role: 'student' },
-            teacher: { username: "Naomi", role: 'teacher' }
-          };
-          setUser(fakeUsers[role]);
-          AsyncStorage.setItem("user", JSON.stringify(fakeUsers[role]));
+          const fakeUser = { username: "Bernard", role: 'student' };
+          setUser(fakeUser);
+          AsyncStorage.setItem("user", JSON.stringify(fakeUser));
         },
         logout: () => {
           //logs out user
