@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, View, SafeAreaView, StyleSheet, ScrollView } fr
 import { Fonts } from "../../Constants/Fonts";
 import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
-import { Layout } from 'react-native-ui-kitten';
+import { Layout } from '@ui-kitten/components';
 import AssignmentCard from '../../Components/AssignmentPanel/AssignmentCard';
 import AssignmentTabButton from '../../Components/AssignmentPanel/AssignmentTabButton';
 import BottomSheet from 'reanimated-bottom-sheet';

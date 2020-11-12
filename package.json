@@ -15,6 +15,7 @@
     "@react-navigation/material-top-tabs": "^5.1.0",
     "@react-navigation/native": "^5.0.8",
     "@react-navigation/stack": "^5.1.0",
+    "@ui-kitten/components": "^5.0.0",
     "@ui-kitten/eva-icons": "^5.0.0",
     "@use-expo/font": "^2.0.0",
     "expo": "~36.0.0",

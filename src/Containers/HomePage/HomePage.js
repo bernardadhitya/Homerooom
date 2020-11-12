@@ -12,7 +12,7 @@ import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
 import { AuthContext } from "../../Helper/AuthProvider";
 import HomePanel from '../../Components/HomePanel/HomePanel';
-import { Layout } from 'react-native-ui-kitten';
+import { Layout } from '@ui-kitten/components';
 import { View } from 'react-native';
 import IconLogout from '../../Assets/icons/IconLogout';
 

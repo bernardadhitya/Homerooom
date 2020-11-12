@@ -5,7 +5,7 @@ import { Fonts } from "../../Constants/Fonts";
 import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
 import { ScrollView } from 'react-native';
-import { Layout } from 'react-native-ui-kitten';
+import { Layout } from '@ui-kitten/components';
 import OnlineNowContent from '../../Components/LiveClassPanel/OnlineNowContent';
 import YourClassesContent from '../../Components/LiveClassPanel/YourClassesContent';
 

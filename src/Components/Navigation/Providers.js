@@ -2,7 +2,7 @@ import React from "react";
 import { AuthProvider } from "../../Helper/AuthProvider";
 import { Routes } from "./Routes";
 import { mapping, light as lightTheme } from '@eva-design/eva';
-import { ApplicationProvider } from 'react-native-ui-kitten';
+import { ApplicationProvider } from '@ui-kitten/components';
 
 export const Providers = () => {
   return (

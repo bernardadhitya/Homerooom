@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFonts } from '@use-expo/font';
 import { View, Text, StyleSheet } from 'react-native';
-import { Layout, Card } from 'react-native-ui-kitten';
+import { Layout, Card } from '@ui-kitten/components';
 import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import { ScrollView } from 'react-native';

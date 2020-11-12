@@ -12,7 +12,7 @@ import {
 import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
-import { Layout } from 'react-native-ui-kitten';
+import { Layout } from '@ui-kitten/components';
 import IconLogout from '../../Assets/icons/IconLogout';
 import { AuthContext } from "../../Helper/AuthProvider";
 import TeacherClassCard from '../../Components/HomePanel/TeacherClassCard';
@@ -20,6 +20,7 @@ import { FloatingAction } from "react-native-floating-action";
 import { useMemoOne } from 'use-memo-one';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
+import CreateClassForm from '../../Components/TeacherHomePanel/CreateClassForm';
 
 const { Bold } = Fonts;
 
@@ -48,6 +49,7 @@ const TeacherHomePage = ({ navigation, route }) => {
       }}
     >
       <Text style={{fontFamily: 'Bold', fontSize: 21}}>Create Class</Text>
+      <CreateClassForm/>
     </Layout>
   );
 
@@ -160,7 +162,7 @@ const TeacherHomePage = ({ navigation, route }) => {
         <FloatingAction
           actions={actions}
           onPressItem={() => sheetRef.current.snapTo(0)}
-          overrideWithAction='true'
+          overrideWithAction={true}
           color='#FFFFFF'
           shadow={{
             shadowColor: "#000",

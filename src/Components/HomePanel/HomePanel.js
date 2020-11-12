@@ -1,7 +1,7 @@
 import { useFonts } from '@use-expo/font';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Layout } from 'react-native-ui-kitten';
+import { Layout } from '@ui-kitten/components';
 import IconAssignments from '../../Assets/icons/IconAssignments';
 import IconGames from '../../Assets/icons/IconGames';
 import IconLiveClass from '../../Assets/icons/IconLiveClass';
