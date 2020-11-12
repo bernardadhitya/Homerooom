@@ -24,8 +24,6 @@ const CreateClassForm = () => {
     return <Text>{selectedStudentsName.join(', ')}</Text>;
   };
 
-  console.log(displayValue);
-
   const renderStudentsOption = (title) => {
     return(
       <SelectItem title={title}/>
