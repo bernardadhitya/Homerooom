@@ -41,7 +41,6 @@ const AssignmentCard = (props) => {
                   padding: 4,
                   borderRadius: 20,
                   backgroundColor:'#FFF5E3',
-                  
                 }}>
                   <Text>🦊</Text>
                 </View>
