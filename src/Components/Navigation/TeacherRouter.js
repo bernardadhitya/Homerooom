@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import TeacherHomePage from "../../Containers/HomePage/TeacherHomePage";
 import TeacherClassPage from "../../Containers/LiveClassPage/TeacherClassPage";
 import TeacherAssignmentPage from "../../Containers/AssignmentPage/TeacherAssignmentPage";
+import TeacherStudentPage from "../../Containers/StudentPage/TeacherStudentPage";
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,13 @@ const TeacherRouter = () => {
         }}
         name="Assignments"
         component={TeacherAssignmentPage}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: "Student"
+        }}
+        name="Student"
+        component={TeacherStudentPage}
       />
     </Stack.Navigator>
   )

@@ -5,13 +5,20 @@ import { Layout } from '@ui-kitten/components';
 import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import TeacherClassStudentCard from './TeacherClassStudentCard';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const TeacherClassStudentPanel = () => {
+  const navigation = useNavigation();
   let [fontsLoaded] = useFonts(Fonts);
 
   return fontsLoaded ? (
     <Layout level='3'>
-      <TeacherClassStudentCard/>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Student')}
+      >
+        <TeacherClassStudentCard/>
+      </TouchableOpacity>
       <TeacherClassStudentCard/>
       <TeacherClassStudentCard/>
       <TeacherClassStudentCard/>
