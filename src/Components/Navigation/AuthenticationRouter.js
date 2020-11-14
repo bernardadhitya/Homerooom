@@ -2,41 +2,116 @@ import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AuthContext } from "../../Helper/AuthProvider";
 import Center from "../Center/Center";
-import { Button, Text } from "react-native";
+import { Button, Text, Image, View, StyleSheet } from "react-native";
 import PageOne from "../../Containers/OnboardingPage/PageOne";
 import PageTwo from "../../Containers/OnboardingPage/PageTwo";
 import PageThree from "../../Containers/OnboardingPage/PageThree";
 import PageFour from "../../Containers/OnboardingPage/PageFour";
 import PageFive from "../../Containers/OnboardingPage/PageFive";
+import { useFonts } from '@use-expo/font';
+import { Fonts } from '../../Constants/Fonts';
+import { AppLoading } from 'expo';
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
 
 const Stack = createStackNavigator();
 
-function Login({ navigation }) {
+const Login = () => {
+  const navigation = useNavigation();
   const { loginAsStudent, loginAsTeacher } = useContext(AuthContext);
-  return (
-    <Center>
-      <Text>I am a login screen</Text>
-      <Button
-        title="log me in as student"
-        onPress={() => {
-          loginAsStudent();
-        }}
+  let [fontsLoaded] = useFonts(Fonts);
+
+  return fontsLoaded ? (
+    <View style={styles.center}>
+      <Image
+        source={require('../../Assets/logo/logo.png')}
+        style={{width: 277, height: 189}}
       />
-      <Button
-        title="log me in as teacher"
-        onPress={() => {
-          loginAsTeacher();
-        }}
-      />
-      <Button
-        title="go to register"
-        onPress={() => {
-          navigation.navigate("PageOne");
-        }}
-      />
-    </Center>
-  );
+      <Text style={{fontFamily: 'Bold', fontSize: 16}}>learn. have fun. together.</Text>
+      <TouchableOpacity style={styles.loginButton} onPress={() => {loginAsStudent()}}>
+        <Text
+          style={{
+            fontFamily: 'Bold',
+            fontSize: 16,
+            color: '#FFFFFF'
+          }}
+        >
+          Login As Student
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.loginButton} onPress={() => {loginAsTeacher()}}>
+        <Text
+          style={{
+            fontFamily: 'Bold',
+            fontSize: 16,
+            color: '#FFFFFF'
+          }}
+        >
+          Login As Teacher
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('PageOne')}}>
+        <Text style={{fontFamily: 'Medium', fontSize: 16, color: '#63C7FD'}}>Don't have account, sign me up!</Text>
+      </TouchableOpacity>
+    </View>
+  ) : <AppLoading/>;
 }
+
+const styles = StyleSheet.create({
+  column: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  layout: {
+    flex: 1,
+    justifyContent: 'center',
+    marginVertical: 10
+  },
+  center: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: '#E5FCFB'
+  },
+  button: {
+    marginVertical: 4,
+    width: 277,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingTop: 16,
+    paddingBottom: 6,
+    alignItems: 'center'
+  },
+  loginButton: {
+    marginVertical: 4,
+    width: 277,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    backgroundColor: '#63C7FD',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingTop: 16,
+    paddingBottom: 6,
+    alignItems: 'center'
+  }
+});
 
 function Register({ navigation, route }) {
   return (
