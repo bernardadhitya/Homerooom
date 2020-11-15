@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text, TouchableOpacity, View, SafeAreaView, StyleSheet } from 'react-native';
 import { Fonts } from '../../Constants/Fonts';
@@ -15,16 +15,32 @@ import { useMemoOne } from 'use-memo-one';
 import BottomSheet from 'reanimated-bottom-sheet';
 import { Layout } from '@ui-kitten/components';
 import TeacherAssignmentSubmissionPanel from './TeacherAssignmentSubmissionPanel';
+import { getClassById } from '../../../firebase';
 
-const TeacherAssignmentPage = () => {
+const TeacherAssignmentPage = ({route}) => {
+  const { classId, assignment } = route.params;
   const navigation = useNavigation();
   const [selectedTab, setSelectedTab] = useState('submitted');
   let [fontsLoaded] = useFonts(Fonts);
+  const [assignmentData, setAssignmentData] = useState({});
+  const [classData, setClassData] = useState({});
+  const [studentData, setStudentData] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedClassById = await getClassById(classId);
+      setClassData(fetchedClassById);
+      setAssignmentData(assignment);
+    };
+    fetchData();
+  }, []);
 
   let sheetRef = useRef(null);
   let fall = useMemoOne(() => new Animated.Value(1), []);
 
   const renderContent = () => {
+    console.log('assignmentId', assignment.assignment_id)
+    console.log('studentId', studentData)
     return (
       <Layout
         style={{
@@ -33,7 +49,11 @@ const TeacherAssignmentPage = () => {
           height: 700
         }}
       >
-        <TeacherAssignmentSubmissionPanel status={selectedTab}/>
+        <TeacherAssignmentSubmissionPanel
+          status={selectedTab}
+          assignmentId={assignment.assignment_id}
+          studentId={studentData}
+        />
       </Layout>
     )
   };
@@ -71,6 +91,21 @@ const TeacherAssignmentPage = () => {
     )
   }
   
+  const renderStudentSubmissionCards = () => {
+    const { students } = assignment;
+
+    return students[selectedTab].map((studentId) => (
+      <TouchableOpacity
+        onPress={() => {
+          setStudentData(studentId);
+          sheetRef.current.snapTo(0);
+        }}
+      >
+        <TeacherClassStudentCard studentId={studentId}/>
+      </TouchableOpacity>
+    ))
+  }
+
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -110,7 +145,7 @@ const TeacherAssignmentPage = () => {
             <Text style={{ fontFamily: 'Bold', fontSize: 21 }}>Assignments</Text>
           </View>
           <View>
-            <TeacherAssignmentCard/>
+            <TeacherAssignmentCard classData={classData} assignmentData={assignment}/>
           </View>
           <View style={{
             marginTop: 16,
@@ -123,17 +158,7 @@ const TeacherAssignmentPage = () => {
             { renderTeacherClassTabButton('Graded') }
           </View>
           <View>
-            <TouchableOpacity
-              onPress={() => sheetRef.current.snapTo(0)}
-            >
-              <TeacherClassStudentCard/>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <TeacherClassStudentCard/>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <TeacherClassStudentCard/>
-            </TouchableOpacity>
+            { renderStudentSubmissionCards() }
           </View>
         </ScrollView>
         {renderShadow()}

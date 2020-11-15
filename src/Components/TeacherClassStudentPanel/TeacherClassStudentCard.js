@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFonts } from '@use-expo/font';
 import { View, Text, StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import IconMenu from '../../Assets/icons/IconMenu';
+import { getUserById } from '../../../firebase';
+import { Avatars } from '../../Constants/Avatars';
 
-const TeacherClassStudentCard = () => {
+const TeacherClassStudentCard = (props) => {
+  const { studentId } = props;
+  const [userData, setUserData] = useState({});
   let [fontsLoaded] = useFonts(Fonts);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedUserById = await getUserById(studentId);
+      setUserData(fetchedUserById);
+    };
+    fetchData();
+  }, []);
 
   return fontsLoaded ? (
     <View style={{
@@ -30,10 +42,10 @@ const TeacherClassStudentCard = () => {
             padding: 8,
             borderRadius: 8
           }}>
-            <Text>🦊</Text>
+            <Text>{Avatars[userData.avatar] || ''}</Text>
           </View>
           <View style={{paddingTop: 8, paddingLeft: 8}}>
-            <Text style={{fontFamily: 'Medium', fontSize: 16}}>Patrick</Text>
+            <Text style={{fontFamily: 'Medium', fontSize: 16}}>{userData.name || ''}</Text>
           </View>
         </View>
         <View style={{alignItems: 'flex-end', paddingTop: 8}}>

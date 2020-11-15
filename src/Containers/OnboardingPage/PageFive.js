@@ -21,7 +21,6 @@ const PageFive = ({ route }) => {
   let [fontsLoaded] = useFonts(Fonts);
 
   const redirectLogin = () => {
-    console.log({userName, email, avatar, role});
     return role === 'teacher' ? loginAsTeacher() : loginAsStudent();
   }
 

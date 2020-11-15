@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFonts } from '@use-expo/font';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card, Input, Layout } from '@ui-kitten/components';
@@ -6,12 +6,25 @@ import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import IconImageAttachment from '../../Assets/icons/IconImageAttachment';
 import { TouchableOpacity } from 'react-native';
+import { getSubmissionByUserIdAndAssignmentId } from '../../../firebase';
 
 const TeacherAssignmentSubmissionPanel = (props) => {
-  const {status} = props;
+  const {assignmentId, studentId, status} = props;
   const [studentScore, setStudentScore] = useState('');
   const [teacherNote, setTeacherNote] = useState('');
+  const [submissionData, setSubmissionData] = useState({});
   let [fontsLoaded] = useFonts(Fonts);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log('----- called! -----');
+      const fetchedSubmissionData = await getSubmissionByUserIdAndAssignmentId(studentId, assignmentId);
+      console.log('submissionData:', fetchedSubmissionData);
+      setSubmissionData(fetchedSubmissionData);
+    };
+    fetchData();
+  }, []);
+  
 
   return fontsLoaded ? (
     <Layout>

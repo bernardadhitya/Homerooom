@@ -18,23 +18,28 @@ const actions = [
   }
 ];
 
-const TeacherClassAssignmentPanel = () => {
+const TeacherClassAssignmentPanel = (props) => {
+  const { classId, assignments } = props;
   const navigation = useNavigation();
   let [fontsLoaded] = useFonts(Fonts);
 
+  const renderTeacherClassAssignmentCards = () => {
+    if (!assignments) return;
+    return assignments.map((assignment) => (
+      <TouchableOpacity
+        onPress={() => {navigation.navigate('Assignments', {
+          classId: classId,
+          assignment: assignment
+        })}}
+      >
+        <TeacherClassAssignmentCard assignment={assignment}/>
+      </TouchableOpacity>
+    ))
+  }
+
   return fontsLoaded ? (
     <Layout level='3'>
-      <TouchableOpacity
-        onPress={() => {navigation.navigate('Assignments')}}
-      >
-        <TeacherClassAssignmentCard/>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <TeacherClassAssignmentCard/>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <TeacherClassAssignmentCard/>
-      </TouchableOpacity>
+      { renderTeacherClassAssignmentCards() }
     </Layout>
   ) : <AppLoading/>;
 }

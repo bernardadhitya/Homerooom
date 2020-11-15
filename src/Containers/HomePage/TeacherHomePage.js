@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   Text,
@@ -21,6 +21,7 @@ import { useMemoOne } from 'use-memo-one';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import CreateClassForm from '../../Components/TeacherHomePanel/CreateClassForm';
+import { getClassesByUserId, getUserById } from '../../../firebase';
 
 const { Bold } = Fonts;
 
@@ -34,8 +35,21 @@ const actions = [
 ];
 
 const TeacherHomePage = ({ navigation, route }) => {
-  const { user: { username }, logout } = useContext(AuthContext);
+  const { user: { userId, username }, logout } = useContext(AuthContext);
   let [fontsLoaded] = useFonts(Fonts);
+  const [userData, setUserData] = useState({});
+  const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedClassesByUserId = await getClassesByUserId(userId);
+      const fetchedUserById = await getUserById(userId);
+
+      setClasses(fetchedClassesByUserId);
+      setUserData(fetchedUserById);
+    }
+    fetchData();
+  }, []);
 
   let sheetRef = useRef(null);
   let fall = useMemoOne(() => new Animated.Value(1), []);
@@ -70,6 +84,19 @@ const TeacherHomePage = ({ navigation, route }) => {
         ]}
       />
     )
+  }
+
+  const renderTeacherClassCard = () => {
+    if (!userData.classes) return;
+    return classes.map((classData, index) => {
+      return (
+        <TouchableOpacity onPress={() => {
+          navigation.navigate("Class", {classId: userData.classes[index]});
+        }}>
+          <TeacherClassCard classData={classData}/>
+        </TouchableOpacity>
+      )
+    });
   }
   
   if (!fontsLoaded) {
@@ -138,21 +165,7 @@ const TeacherHomePage = ({ navigation, route }) => {
             </Layout>
           </Layout>
           <Text style={{fontFamily: 'Bold', fontSize: 16}}>Your Classes</Text>
-          <TouchableOpacity onPress={() => {
-            navigation.navigate("Class");
-          }}>
-            <TeacherClassCard />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {
-            navigation.navigate("Class");
-          }}>
-            <TeacherClassCard />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {
-            navigation.navigate("Class");
-          }}>
-            <TeacherClassCard />
-          </TouchableOpacity>
+          { renderTeacherClassCard() }
         </ScrollView>
         <FloatingAction
           actions={actions}

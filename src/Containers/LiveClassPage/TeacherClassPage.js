@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text, TouchableOpacity, View, SafeAreaView, StyleSheet } from 'react-native';
 import { Fonts } from '../../Constants/Fonts';
@@ -17,6 +17,8 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import { Layout } from '@ui-kitten/components';
 import CreateAssignmentForm from '../../Components/TeacherClassAssignmentPanel/CreateAssignmentForm';
 import AddStudentForm from '../../Components/TeacherClassStudentPanel/AddStudentForm';
+import { addStudent, getClassById } from '../../../firebase';
+
 
 const actions = [
   {
@@ -28,8 +30,19 @@ const actions = [
 ];
 
 const TeacherClassPage = ({navigation, route}) => {
+  const { classId } = route.params;
   const [selectedTab, setSelectedTab] = useState('assignments');
   let [fontsLoaded] = useFonts(Fonts);
+
+  const [classData, setClassData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedClassById = await getClassById(classId);
+      setClassData(fetchedClassById)
+    }
+    fetchData();
+  }, []);
   
   let sheetRef = useRef(null);
   let fall = useMemoOne(() => new Animated.Value(1), []);
@@ -67,9 +80,15 @@ const TeacherClassPage = ({navigation, route}) => {
   }
 
   const renderTeacherClassPanel = () => {
+    if (!classData.assignments || !classData.students) return;
+    const { assignments, students } = classData;
     const panels = {
-      assignments: <TeacherClassAssignmentPanel/>,
-      students: <TeacherClassStudentPanel/>
+      assignments:
+        <TeacherClassAssignmentPanel
+          assignments={assignments}
+          classId={classId}
+        />,
+      students: <TeacherClassStudentPanel students={students}/>
     }
     return panels[selectedTab] || <Text>{selectedTab}</Text>
   }
@@ -132,7 +151,7 @@ const TeacherClassPage = ({navigation, route}) => {
             <Text style={{ fontFamily: 'Bold', fontSize: 21 }}>Class</Text>
           </View>
           <View>
-            <TeacherClassCard/>
+            <TeacherClassCard classData={classData}/>
           </View>
           <View style={{
             backgroundColor: '#EAEAEA',

@@ -6,8 +6,13 @@ import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import IconMenu from '../../Assets/icons/IconMenu';
 
-const TeacherClassAssignmentCard = () => {
+const TeacherClassAssignmentCard = (props) => {
+  const { assignment } = props;
+  const {title, students: { graded, submitted }} = assignment;
+
   let [fontsLoaded] = useFonts(Fonts);
+
+  console.log('assignment:', assignment);
 
   return fontsLoaded ? (
     <View style={{
@@ -25,7 +30,7 @@ const TeacherClassAssignmentCard = () => {
     }}>
       <View style={styles.row}>
         <View style={{ flex: 1 }}>
-          <Text style={{fontFamily: 'Bold', fontSize: 12}}>Exercise page 12-13 no. 1-10</Text>
+          <Text style={{fontFamily: 'Bold', fontSize: 12}}>{title}</Text>
         </View>
         <View style={{alignItems: 'flex-end'}}>
           <IconMenu/>
@@ -33,12 +38,12 @@ const TeacherClassAssignmentCard = () => {
       </View>
       <View style={styles.row}>
         <View style={styles.col}>
-          <Text style={{fontSize: 36}}>10</Text>
+          <Text style={{fontSize: 36}}>{submitted.length}</Text>
           <Text style={{fontFamily: 'Regular', fontSize: 12}}>Submitted</Text>
         </View>
         <View style={{padding: 16}}></View>
         <View style={styles.col}>
-          <Text style={{fontSize: 36}}>5</Text>
+          <Text style={{fontSize: 36}}>{graded.length}</Text>
           <Text style={{fontFamily: 'Regular', fontSize: 12}}>Graded</Text>
         </View>
       </View>

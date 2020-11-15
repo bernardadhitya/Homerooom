@@ -15,12 +15,20 @@ export const AuthProvider= ({ children }) => {
       value={{
         user,
         loginAsStudent: () => {
-          const fakeStudent = { username: "Bernard", role: 'student' };
+          const fakeStudent = { 
+            userId: 'arwM0bzRmcUljhivBrPu',
+            username: "Bernard",
+            role: 'student'
+          };
           setUser(fakeStudent);
           AsyncStorage.setItem("user", JSON.stringify(fakeStudent));
         },
         loginAsTeacher: () => {
-          const fakeTeacher = { username: "Naomi", role: 'teacher' };
+          const fakeTeacher = {
+            userId: 'XEtwJg8K0yfvRIgLiKXO',
+            username: "Naomi",
+            role: 'teacher'
+          };
           setUser(fakeTeacher);
           AsyncStorage.setItem("user", JSON.stringify(fakeTeacher));
         },

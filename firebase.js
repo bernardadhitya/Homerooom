@@ -115,24 +115,51 @@ export const getAllClasses = async () => {
 
 export const getClassById = async (classId) => {
   const response = await db.collection('classes').doc(classId).get();
+  const responseId = response.id;
   const responseData = response.data();
-  return responseData;
+  return { classId: responseId, ...responseData};
 }
 
 export const getUserById = async (userId) => {
   const response = await db.collection('users').doc(userId).get();
+  const responseId = response.id;
   const responseData = response.data();
-  return responseData;
+  return { userId: responseId, ...responseData};
 }
 
 export const getAssignmentById = async (assignmentId) => {
   const response = await db.collection('assignments').doc(assignmentId).get();
+  const responseId = response.id;
   const responseData = response.data();
-  return responseData;
+  return { assignmentId: responseId, ...responseData};
 }
 
 export const getSubmissionById = async (submissionId) => {
-  const response = await db.collection('submissions').doc(submmisionId).get();
+  const response = await db.collection('submissions').doc(submissionId).get();
+  const responseId = response.id;
   const responseData = response.data();
-  return responseData;
+  return { submissionId: responseId, ...responseData};
+}
+
+export const getClassesByUserId = async (userId) => {
+  const userData = await getUserById(userId);
+  const { classes } = userData;
+
+  const getClassesData = async () => {
+    return Promise.all(classes.map(classId => getClassById(classId)));
+  };
+
+  const classesData = await getClassesData();
+
+  return classesData;
+}
+
+export const getSubmissionByUserIdAndAssignmentId = async (userId, assignmentId) => {
+  const response = await db.collection('submissions')
+    .where('student_id', '==', userId)
+    .where('assignment_id', '==', assignmentId)
+    .get();
+  const responseId = response.id;
+  const responseData = response.data();
+  return { submissionId: responseId, ...responseData};
 }
