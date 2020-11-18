@@ -13,6 +13,10 @@ Another approach to increase engagement is to make games related to the subject 
 
 ### 👀 Preview
 
+##### Onboarding Interface
+![Onboarding View](src/Assets/screenshots/onboarding.jpg)
+When starting the app, user will be prompetd to sign in or sign up. When signing up, user will see an onboarding screen to get a grasp of Homerooom. User will then create their account, and specify their user type; as a student or teacher.
+
 ###### Student User Interface
 ![Student View](src/Assets/screenshots/student.png)
 Student will have a packed dashboard, filled with reminders for next class, assignments, and show achievements by badges. Student can also join Live Class, submit assignments, and play games directly from the platform.
