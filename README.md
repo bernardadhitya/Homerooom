@@ -1,6 +1,6 @@
 # Homerooom
 
-> 🏆🏆🏆 Third Place Winner at BIOS 2020 Hackathon by Universitas Multimedia Nusantara 🏆🏆🏆
+> 🏆🏅🏆 Third Place Winner at BIOS 2020 Hackathon by Universitas Multimedia Nusantara 🏆🏅🏆
 
 ### 💡 About the App
 Homerooom is an all-in-one mobile app solution for online learning. This app is made to tackle the issues found during COVID-19, where schools have a hard time to adjust with the WFH (work from home) situation.
