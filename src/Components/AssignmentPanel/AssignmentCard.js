@@ -6,9 +6,10 @@ import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import CharacterMrTeacher from '../../Assets/characters/CharacterMrTeacher';
 import IconImageAttachment from '../../Assets/icons/IconImageAttachment';
+import { Characters } from '../../Constants/Characters';
 
 const AssignmentCard = (props) => {
-  const {detail} = props;
+  const {title, color, avatar, teacherName, className, detail} = props;
   let [fontsLoaded] = useFonts(Fonts);
 
   return fontsLoaded ? (
@@ -25,17 +26,17 @@ const AssignmentCard = (props) => {
         elevation: 3,
       }} level='3'>
         <View style={{
-          backgroundColor: '#FDD444',
+          backgroundColor: color,
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
         }}>
           <View style={styles.row}>
             <View>
-              <CharacterMrTeacher/>
+              { Characters[avatar] }
             </View>
             <View style={styles.center}>
-              <Text style={{fontFamily: 'Bold', fontSize: 16}}>Mathematics</Text>
-              <Text style={{fontFamily: 'Regular', fontSize: 10}}>Mr Wishnu</Text>
+              <Text style={{fontFamily: 'Bold', fontSize: 16}}>{className}</Text>
+              <Text style={{fontFamily: 'Regular', fontSize: 10}}>{teacherName}</Text>
               <View style={{flexDirection:'row', flexWrap:'wrap'}}>
                 <View style={{
                   padding: 4,
@@ -43,15 +44,6 @@ const AssignmentCard = (props) => {
                   backgroundColor:'#FFF5E3',
                 }}>
                   <Text>🦊</Text>
-                </View>
-                <View style={{padding: 4, borderRadius: 20, backgroundColor:'#FFF5E3'}}>
-                  <Text>🐶</Text>
-                </View>
-                <View style={{padding: 4, borderRadius: 20, backgroundColor:'#FFF5E3'}}>
-                  <Text>🐵</Text>
-                </View>
-                <View style={{padding: 4, borderRadius: 20, backgroundColor:'#FFF5E3'}}>
-                  <Text>+21</Text>
                 </View>
               </View>
             </View>
@@ -65,7 +57,7 @@ const AssignmentCard = (props) => {
           paddingVertical: 20
         }}>
           <Text style={{fontFamily: 'Bold', fontSize: 18}}>
-            Play “Marry Has a Little Lamb”
+            {title}
           </Text>
           <View style={{
             alignSelf: 'flex-start',
@@ -86,7 +78,7 @@ const AssignmentCard = (props) => {
           </View>
           { detail ? <View>
             <Text style={{fontFamily: 'Regular', fontSize: 12, paddingVertical: 3}}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. 
+              Do this exercise
             </Text>
             <Text style={{fontFamily: 'SemiBold', fontSize: 12, paddingVertical: 3}}>Attachments</Text>
             <Card>
@@ -95,8 +87,8 @@ const AssignmentCard = (props) => {
                   <IconImageAttachment />
                 </Layout>
                 <Layout style={styles.column}>
-                  <Text style={{fontFamily: 'Medium', fontSize: 10}}>Note Block - Marry Has a Little Lamb</Text>
-                  <Text style={{fontFamily: 'Regular', fontSize: 8}}>2.4 MB</Text>
+                  <Text style={{fontFamily: 'Medium', fontSize: 10}}>Texbook pg.12-13</Text>
+                  <Text style={{fontFamily: 'Regular', fontSize: 8}}>0.8 MB</Text>
                 </Layout>
               </Layout>
             </Card>

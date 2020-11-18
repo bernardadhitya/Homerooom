@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFonts } from '@use-expo/font';
 import { View, Text, StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
@@ -7,22 +7,40 @@ import { AppLoading } from 'expo';
 import TeacherClassStudentCard from './TeacherClassStudentCard';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { getUsersByUserId } from '../../../firebase';
 
-const TeacherClassStudentPanel = () => {
+const TeacherClassStudentPanel = (props) => {
+  const { students, classId } = props;
   const navigation = useNavigation();
   let [fontsLoaded] = useFonts(Fonts);
+  const [studentsData, setStudentsData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedStudentsData = await getUsersByUserId(students);
+      setStudentsData(fetchedStudentsData);
+    }
+    fetchData();
+  }, []);
+
+  const renderStudentCards = () => {
+    if (!students) return;
+    return students.map((studentId) => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Student', {
+            studentId: studentId,
+            classId: classId
+          })}
+        >
+          <TeacherClassStudentCard studentId={studentId}/>
+        </TouchableOpacity>
+      )
+    )
+  }
 
   return fontsLoaded ? (
     <Layout level='3'>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Student')}
-      >
-        <TeacherClassStudentCard/>
-      </TouchableOpacity>
-      <TeacherClassStudentCard/>
-      <TeacherClassStudentCard/>
-      <TeacherClassStudentCard/>
-      <TeacherClassStudentCard/>
+      { renderStudentCards() }
     </Layout>
   ) : <AppLoading/>;
 }

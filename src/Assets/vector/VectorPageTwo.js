@@ -3,8 +3,9 @@ import Svg, { G, Path } from "react-native-svg"
 /* SVGR has dropped some elements not supported by react-native-svg: title */
 
 const VectorPageTwo = (props) => {
+  const { width, height } = props;
   return (
-    <Svg width={306} height={256} viewBox="0 0 306 256" {...props}>
+    <Svg width={width || 306} height={height || 256} viewBox="0 0 306 256" {...props}>
       <G fill="none" fillRule="evenodd">
         <Path
           d="M138 43.5c0 20.16-16.342 36.5-36.5 36.5C81.34 80 65 63.66 65 43.5 65 23.343 81.34 7 101.5 7 121.657 7 138 23.342 138 43.5"

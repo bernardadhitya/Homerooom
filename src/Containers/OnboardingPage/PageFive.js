@@ -15,13 +15,13 @@ import { AuthContext } from '../../Helper/AuthProvider';
 
 const PageFive = ({ route }) => {
   const { userName, email, avatar } = route.params;
-  const { loginAsStudent, loginAsTeacher } = useContext(AuthContext);
+  const { loginAsStudent, loginAsTeacher, register } = useContext(AuthContext);
   const [role, setRole] = useState('');
   const navigation = useNavigation();
   let [fontsLoaded] = useFonts(Fonts);
 
   const redirectLogin = () => {
-    return role === 'teacher' ? loginAsTeacher() : loginAsStudent();
+    return register({userName, email, avatar, role});
   }
 
   if (!fontsLoaded) {

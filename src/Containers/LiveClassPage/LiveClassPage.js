@@ -8,6 +8,7 @@ import { ScrollView } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import OnlineNowContent from '../../Components/LiveClassPanel/OnlineNowContent';
 import YourClassesContent from '../../Components/LiveClassPanel/YourClassesContent';
+import { Colors } from '../../Constants/Colors';
 
 const { Bold } = Fonts;
 
@@ -44,7 +45,9 @@ const Feed = () => {
           </View>
           <Layout style={{marginTop: 20}}level='3'>
             <Text style={{fontFamily: 'Bold', fontSize: 16}}>Online Now</Text>
-            <OnlineNowContent/>
+            <View style={{alignItems: 'center', paddingTop: 14}}>
+              <Text style={{fontFamily: 'SemiBold', fontSize: 14, color: Colors.red}}>There is no class online right now</Text>
+            </View>
           </Layout>
           <Layout style={{marginVertical: 20}}level='3'>
             <Text style={{fontFamily: 'Bold', fontSize: 16}}>Your Classes</Text>

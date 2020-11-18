@@ -39,17 +39,20 @@ const TeacherHomePage = ({ navigation, route }) => {
   let [fontsLoaded] = useFonts(Fonts);
   const [userData, setUserData] = useState({});
   const [classes, setClasses] = useState([]);
+  const [trigger, setTrigger] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       const fetchedClassesByUserId = await getClassesByUserId(userId);
       const fetchedUserById = await getUserById(userId);
 
+      sheetRef.current.snapTo(2);
+
       setClasses(fetchedClassesByUserId);
       setUserData(fetchedUserById);
     }
     fetchData();
-  }, []);
+  }, [trigger]);
 
   let sheetRef = useRef(null);
   let fall = useMemoOne(() => new Animated.Value(1), []);
@@ -63,7 +66,7 @@ const TeacherHomePage = ({ navigation, route }) => {
       }}
     >
       <Text style={{fontFamily: 'Bold', fontSize: 21}}>Create Class</Text>
-      <CreateClassForm/>
+      <CreateClassForm teacherId={userData.userId}/>
     </Layout>
   );
 
@@ -165,7 +168,15 @@ const TeacherHomePage = ({ navigation, route }) => {
             </Layout>
           </Layout>
           <Text style={{fontFamily: 'Bold', fontSize: 16}}>Your Classes</Text>
+
           { renderTeacherClassCard() }
+
+          <TouchableOpacity 
+            style={{ height: 100 }}
+            onPress={() => { console.log(trigger); setTrigger(trigger + 1)}}
+          >
+            
+          </TouchableOpacity>
         </ScrollView>
         <FloatingAction
           actions={actions}

@@ -1,16 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFonts } from '@use-expo/font';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Layout, Input, Datepicker } from '@ui-kitten/components';
 import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
+import { createAssignment } from '../../../firebase';
 
-const CreateAssignmentForm = () => {
+const CreateAssignmentForm = (props) => {
+  const { classData: { classId } } = props;
   const [assignmentTitle, setAssignmentTitle] = useState('');
   const [instruction, setInstruction] = useState('');
   const [date, setDate] = useState(new Date());
 
   let [fontsLoaded] = useFonts(Fonts);
+
+  const clearState = () => {
+    setAssignmentTitle('');
+    setInstruction('');
+    setDate(new Date());
+  }
+
+  const submitCreateAssignmentForm = async () => {
+    const newAssignment = {
+      title: assignmentTitle,
+      instructions: instruction,
+      dueDate: date
+    }
+    clearState();
+    return await createAssignment(newAssignment, classId);
+  }
 
   return fontsLoaded ? (
     <Layout>
@@ -62,7 +80,7 @@ const CreateAssignmentForm = () => {
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => console.log('pressed')}>
+      <TouchableOpacity onPress={() => submitCreateAssignmentForm() }>
         <View style={styles.center, {
           marginTop: 12,
           alignItems: 'center',

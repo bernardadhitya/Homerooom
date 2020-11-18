@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFonts } from '@use-expo/font';
 import { View, Text, StyleSheet } from 'react-native';
 import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import CharacterMrTeacher from '../../Assets/characters/CharacterMrTeacher';
 import { Colors } from '../../Constants/Colors';
+import { Characters } from '../../Constants/Characters';
+import { getUserById } from '../../../firebase';
 
 const TeacherClassCard = (props) => {
   let [fontsLoaded] = useFonts(Fonts);
   const {avatar, color, name, students, subject, teacher_id: teacherId} = props.classData;
+
 
   const renderStudentsAvatar = () => {
     const defaultAvatars = ['🦊', '🐶', '🐵'];
@@ -27,7 +30,7 @@ const TeacherClassCard = (props) => {
     } else {
       return (
         <>
-          <View style={{padding: 4,borderRadius: 20,backgroundColor:'#FFF5E3',}}>
+          <View style={{padding: 4,borderRadius: 20,backgroundColor:'#FFF5E3'}}>
             <Text>🦊</Text>
           </View>
           <View style={{padding: 4, borderRadius: 20, backgroundColor:'#FFF5E3'}}>
@@ -52,11 +55,11 @@ const TeacherClassCard = (props) => {
     }}>
       <View style={styles.row}>
         <View>
-          <CharacterMrTeacher/>
+          { Characters[avatar] || Characters[0] }
         </View>
         <View style={styles.center}>
           <Text style={{fontFamily: 'Bold', fontSize: 16}}>{subject} - {name}</Text>
-          <Text style={{fontFamily: 'Regular', fontSize: 10}}>Mr Wishnu</Text>
+          <Text style={{fontFamily: 'Regular', fontSize: 10}}>Naomi</Text>
           <View style={{flexDirection:'row', flexWrap:'wrap'}}>
             {renderStudentsAvatar()}
           </View>

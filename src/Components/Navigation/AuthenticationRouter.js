@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AuthContext } from "../../Helper/AuthProvider";
 import Center from "../Center/Center";
-import { Button, Text, Image, View, StyleSheet } from "react-native";
+import { Button, Text, Image, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import PageOne from "../../Containers/OnboardingPage/PageOne";
 import PageTwo from "../../Containers/OnboardingPage/PageTwo";
 import PageThree from "../../Containers/OnboardingPage/PageThree";
@@ -13,6 +13,7 @@ import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
+import { Input, Layout } from "@ui-kitten/components";
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,17 @@ const Login = () => {
   const { loginAsStudent, loginAsTeacher } = useContext(AuthContext);
   let [fontsLoaded] = useFonts(Fonts);
 
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const checkLogin = () => {
+    if (email === 'naomi@homerooom.com'){
+      loginAsTeacher();
+    } else {
+      loginAsStudent();
+    }
+  }
+
   return fontsLoaded ? (
     <View style={styles.center}>
       <Image
@@ -28,7 +40,23 @@ const Login = () => {
         style={{width: 277, height: 189}}
       />
       <Text style={{fontFamily: 'Bold', fontSize: 16}}>learn. have fun. together.</Text>
-      <TouchableOpacity style={styles.loginButton} onPress={() => {loginAsStudent()}}>
+      <View style={{width: 300}}>
+        <Input
+          value={email}
+          label='Email'
+          placeholder='Place your email'
+          onChangeText={nextValue => setEmail(nextValue)}
+        />
+        <Input
+          value={password}
+          label='Password'
+          placeholder='Place your Text'
+          secureTextEntry={true}
+          onChangeText={nextValue => setPassword(nextValue)}
+        />
+      </View>
+      <View style={{height: 30}}></View>
+      <TouchableOpacity style={styles.loginButton} onPress={() => {checkLogin()}}>
         <Text
           style={{
             fontFamily: 'Bold',
@@ -36,18 +64,7 @@ const Login = () => {
             color: '#FFFFFF'
           }}
         >
-          Login As Student
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.loginButton} onPress={() => {loginAsTeacher()}}>
-        <Text
-          style={{
-            fontFamily: 'Bold',
-            fontSize: 16,
-            color: '#FFFFFF'
-          }}
-        >
-          Login As Teacher
+          Login
         </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('PageOne')}}>

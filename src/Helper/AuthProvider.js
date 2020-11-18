@@ -32,6 +32,16 @@ export const AuthProvider= ({ children }) => {
           setUser(fakeTeacher);
           AsyncStorage.setItem("user", JSON.stringify(fakeTeacher));
         },
+        register: (userData) => {
+          const { userName } = userData;
+          const newUser = {
+            userId: 'WjitTbcn26lWeBUsj2Lk',
+            username: userName,
+            role: 'student'
+          };
+          setUser(newUser);
+          AsyncStorage.setItem("user", JSON.stringify(newUser));
+        },
         logout: () => {
           //logs out user
           setUser(null);

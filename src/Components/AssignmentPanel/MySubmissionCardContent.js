@@ -59,7 +59,7 @@ const MySubmissionCardContent = (props) => {
                 <IconImageAttachment />
               </Layout>
               <Layout style={styles.column}>
-                <Text style={{fontFamily: 'Medium', fontSize: 10}}>Note Block - Marry Has a Little Lamb</Text>
+                <Text style={{fontFamily: 'Medium', fontSize: 10}}>Bernard_Exercise.jpg</Text>
                 <Text style={{fontFamily: 'Regular', fontSize: 8}}>2.4 MB</Text>
               </Layout>
             </Layout>
@@ -87,7 +87,7 @@ const MySubmissionCardContent = (props) => {
                 <IconImageAttachment />
               </Layout>
               <Layout style={styles.column}>
-                <Text style={{fontFamily: 'Medium', fontSize: 10}}>Note Block - Marry Has a Little Lamb</Text>
+                <Text style={{fontFamily: 'Medium', fontSize: 10}}>Bernard_Exercise.jpg</Text>
                 <Text style={{fontFamily: 'Regular', fontSize: 8}}>2.4 MB</Text>
               </Layout>
             </Layout>
@@ -99,7 +99,7 @@ const MySubmissionCardContent = (props) => {
       </Text>
       <Card>
         <Text style={{fontFamily: 'Regular', fontSize: 12}}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+        Good job! Keep up the good work
         </Text>
       </Card>
     </View>

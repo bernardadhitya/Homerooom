@@ -43,15 +43,64 @@ export const createClass = async (classData) => {
     color,
     assignments: [],
     students
+  })
+  .then(async (classRef) => {
+    const teacherData = await getUserById(teacherId);
+    const studentsData = await getUsersByUserId(students);
+
+    const pushClassesToStudents = async () => {
+      return Promise.all(studentsData.map(async (studentData) => {
+        const { classes: studentClasses, userId: studentId  } = studentData;
+        studentClasses.push(classRef.id);
+        await db.collection('users').doc(studentId).update({
+          classes: studentClasses
+        });
+      }));
+    }
+
+    await pushClassesToStudents();
+
+    const { classes: teacherClasses } = teacherData;
+    teacherClasses.push(classRef.id);
+    await db.collection('users').doc(teacherId).update({
+      classes: teacherClasses
+    });
   });
 }
 
-export const createAssignment = async (assignmentData) => {
+export const createAssignment = async (assignmentData, classId) => {
   const { title, instructions, dueDate } = assignmentData;
   await db.collection('assignments').add({
     title,
     instructions,
     dueDate
+  })
+  .then(async (assignmentRef) => {
+    const classData = await getClassById(classId);
+    const { assignments } = classData;
+    assignments.push({
+      assignment_id: assignmentRef.id,
+      title,
+      students: {
+        graded: [],
+        submitted: []
+      }
+    });
+    await db.collection('classes').doc(classId).update({
+      assignments
+    });
+  })
+}
+
+export const addStudentToClassById = async (selectedStudentsId, classId) => {
+  const classData = await getClassById(classId);
+  const { students } = classData;
+  selectedStudentsId.forEach(studentId => {
+    students.push(studentId);
+  });
+
+  await db.collection('classes').doc(classId).update({
+    students
   });
 }
 
@@ -109,7 +158,21 @@ export const gradeSubmissionById = async (submissionId, grade) => {
 
 export const getAllClasses = async () => {
   const response = await db.collection('classes').get();
-  const data = response.docs.map(doc => doc.data());
+  const data = response.docs.map(doc => {
+    const responseId = doc.id;
+    const responseData = doc.data();
+    return { class_id: responseId, ...responseData }
+  });
+  return data;
+}
+
+export const getAllStudents = async () => {
+  const response = await db.collection('users').where("role", "==", "student").get();
+  const data = response.docs.map(doc => {
+    const responseId = doc.id;
+    const responseData = doc.data();
+    return { user_id: responseId, ...responseData }
+  });
   return data;
 }
 
@@ -162,4 +225,37 @@ export const getSubmissionByUserIdAndAssignmentId = async (userId, assignmentId)
   const responseId = response.id;
   const responseData = response.data();
   return { submissionId: responseId, ...responseData};
+}
+
+export const getUsersByUserId = async (usersId) => {
+  const getUsersData = async () => {
+    return Promise.all(usersId.map(userId => getUserById(userId)));
+  }
+
+  const usersData = await getUsersData();
+
+  return usersData;
+}
+
+export const getGradedAssignmentsByUserId = async (userId) => {
+  const userData = await getUserById(userId);
+  const { classes } = userData;
+
+  const getGradedAssignments = async () => {
+    return Promise.all(classes.map(async (classId) => {
+      const classData = await getClassById(classId);
+      const { assignments } = classData;
+      
+      const gradedAssignments = assignments.map((assignment) => {
+        const { assignment_id, students: { graded } } = assignment;
+        if (userId in graded) {
+          return assignment_id
+        } else {
+           return;
+        }
+      });
+      return gradedAssignments;
+    }))
+  }
+  
 }

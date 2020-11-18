@@ -66,7 +66,7 @@ const TeacherAssignmentSubmissionPanel = (props) => {
               <IconImageAttachment/>
             </Layout>
             <Layout style={styles.column}>
-              <Text style={{fontFamily: 'Medium', fontSize: 10}}>Note Block - Marry Has a Little Lamb</Text>
+              <Text style={{fontFamily: 'Medium', fontSize: 10}}>Exercise-result.jpg</Text>
               <Text style={{fontFamily: 'Regular', fontSize: 8}}>2.4 MB</Text>
             </Layout>
           </Layout>

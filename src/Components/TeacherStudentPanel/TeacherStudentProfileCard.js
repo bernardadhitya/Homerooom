@@ -6,7 +6,8 @@ import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import IconMenu from '../../Assets/icons/IconMenu';
 
-const TeacherStudentProfileCard = () => {
+const TeacherStudentProfileCard = (props) => {
+  const {studentData, classData} = props;
   let [fontsLoaded] = useFonts(Fonts);
 
   return fontsLoaded ? (
@@ -36,8 +37,8 @@ const TeacherStudentProfileCard = () => {
             <Text style={{fontSize: 14}}>🦊</Text>
           </View>
           <View style={styles.column, {paddingTop: 8, paddingLeft: 8}}>
-            <Text style={{fontFamily: 'Medium', fontSize: 16}}>Patrick</Text>
-            <Text style={{fontFamily: 'Regular', fontSize: 12}}>Mathematics - Class 1B</Text>
+            <Text style={{fontFamily: 'Medium', fontSize: 16}}>{studentData.name || ''}</Text>
+            <Text style={{fontFamily: 'Regular', fontSize: 12}}>{classData.subject} - {classData.name}</Text>
           </View>
         </View>
         <View style={{alignItems: 'flex-end', paddingTop: 8}}>

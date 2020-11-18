@@ -15,6 +15,8 @@ export const Routes = () => {
   const { user, loginAsStudent, loginAsTeacher } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
+  console.disableYellowBox = true;
+
   useEffect(() => {
     // check if the user is logged in or not
     AsyncStorage.getItem("user")

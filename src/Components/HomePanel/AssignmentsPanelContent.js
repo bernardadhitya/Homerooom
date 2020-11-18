@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFonts } from '@use-expo/font';
 import { View, Text, StyleSheet } from 'react-native';
 import { Layout, Card } from '@ui-kitten/components';
@@ -6,6 +6,9 @@ import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import CharacterMrTeacher from '../../Assets/characters/CharacterMrTeacher';
 import { ScrollView } from 'react-native';
+import { Characters } from '../../Constants/Characters';
+import { Colors } from '../../Constants/Colors';
+import { AuthContext } from '../../Helper/AuthProvider';
 
 const ASSIGNMENTS = [
   {
@@ -14,9 +17,10 @@ const ASSIGNMENTS = [
 ]
 
 const AssignmentsPanelContent = () => {
+  const { user: {username} } = useContext(AuthContext);
   let [fontsLoaded] = useFonts(Fonts);
 
-  const renderAssignmentsPanelCard = (backgroundColor) => {
+  const renderAssignmentsPanelCard = (backgroundColor, title, className, teacherName, avatar) => {
     return (
       <Layout style={styles.column, {marginRight: 10}} level='3'>
         <View style={{
@@ -27,7 +31,7 @@ const AssignmentsPanelContent = () => {
         }}>
           <View style={styles.row}>
             <View style={{flex:1, justifyContent: 'flex-end'}}>
-              <CharacterMrTeacher/>
+              { Characters[avatar] }
             </View>
             <View style={styles.center}>
               <Text style={{
@@ -36,7 +40,7 @@ const AssignmentsPanelContent = () => {
                 flexShrink: 1,
                 flexDirection: 'row'
               }}>
-                Mathematics
+                {title}
               </Text>
               
               <View>
@@ -58,8 +62,8 @@ const AssignmentsPanelContent = () => {
                   </Text>
                 </View>
               </View>
-              <Text style={{fontFamily: 'Bold', fontSize: 10}}>Mathematics</Text>
-              <Text style={{fontFamily: 'Regular', fontSize: 10}}>Mr Wishnu</Text>
+              <Text style={{fontFamily: 'Bold', fontSize: 10}}>{className}</Text>
+              <Text style={{fontFamily: 'Regular', fontSize: 10}}>{teacherName}</Text>
             </View>
           </View>
         </View>
@@ -67,17 +71,23 @@ const AssignmentsPanelContent = () => {
     )
   }
 
-  return fontsLoaded ? (
-    <Layout style={styles.row} level='3'>
-      <ScrollView horizontal>
-        { renderAssignmentsPanelCard('#98E2DD') }
-        { renderAssignmentsPanelCard('#9DCC38') }
-        { renderAssignmentsPanelCard('#98E2DD') }
-        { renderAssignmentsPanelCard('#9DCC38') }
-        { renderAssignmentsPanelCard('#98E2DD') }
-      </ScrollView>
-    </Layout>
-  ) : <AppLoading/>;
+  const renderPanel = () => {
+    return username === 'Bernard' ? (
+      <Layout style={styles.row} level='3'>
+        <ScrollView horizontal>
+          { renderAssignmentsPanelCard(Colors.aqua, 'Do exercise 2A\nno.1-5', 'Science', 'Naomi', 4) }
+          { renderAssignmentsPanelCard(Colors.yellow, 'Exercise page\n12-13 no. 1-10', 'Mathematics', 'Naomi', 0) }
+          { renderAssignmentsPanelCard(Colors.yellow, 'Exercise page\n1-5', 'Mathematics', 'Naomi', 0) }
+        </ScrollView>
+      </Layout>
+    ) : (
+      <View style={{alignItems: 'center', paddingTop: 14}}>
+        <Text style={{fontFamily: 'SemiBold', fontSize: 14}}>There is no assignments right now</Text>
+      </View>
+    )
+  }
+
+  return fontsLoaded ? renderPanel() : <AppLoading/>;
 }
 
 const styles = StyleSheet.create({

@@ -34,12 +34,12 @@ const TeacherStudentAttendanceCard = () => {
         </View>
         <View style={{padding: 16}}></View>
         <View style={styles.col}>
-          <Text style={{fontSize: 36, color:'#FDD444'}}>5</Text>
+          <Text style={{fontSize: 36, color:'#FDD444'}}>0</Text>
           <Text style={{fontFamily: 'Regular', fontSize: 12}}>Excused</Text>
         </View>
         <View style={{padding: 16}}></View>
         <View style={styles.col}>
-          <Text style={{fontSize: 36, color: '#EF5B54'}}>5</Text>
+          <Text style={{fontSize: 36, color: '#EF5B54'}}>0</Text>
           <Text style={{fontFamily: 'Regular', fontSize: 12}}>Absent</Text>
         </View>
       </View>

@@ -40,6 +40,13 @@ const TeacherClassAssignmentPanel = (props) => {
   return fontsLoaded ? (
     <Layout level='3'>
       { renderTeacherClassAssignmentCards() }
+      <TouchableOpacity
+        style={{
+          height: 100
+        }}
+        onPress={() => {}}
+      >
+      </TouchableOpacity>
     </Layout>
   ) : <AppLoading/>;
 }

@@ -9,7 +9,7 @@ import { getUserById } from '../../../firebase';
 import { Avatars } from '../../Constants/Avatars';
 
 const TeacherClassStudentCard = (props) => {
-  const { studentId } = props;
+  const { studentId, studentData } = props;
   const [userData, setUserData] = useState({});
   let [fontsLoaded] = useFonts(Fonts);
 
@@ -20,6 +20,16 @@ const TeacherClassStudentCard = (props) => {
     };
     fetchData();
   }, []);
+
+  const renderName = () => {
+    if (studentData){
+      console.log('student name:', studentData.name)
+      return studentData.name;
+    } else {
+      console.log('student name:', userData.name || '')
+      return userData.name || '';
+    }
+  }
 
   return fontsLoaded ? (
     <View style={{
@@ -45,7 +55,7 @@ const TeacherClassStudentCard = (props) => {
             <Text>{Avatars[userData.avatar] || ''}</Text>
           </View>
           <View style={{paddingTop: 8, paddingLeft: 8}}>
-            <Text style={{fontFamily: 'Medium', fontSize: 16}}>{userData.name || ''}</Text>
+            <Text style={{fontFamily: 'Medium', fontSize: 16}}>{renderName()}</Text>
           </View>
         </View>
         <View style={{alignItems: 'flex-end', paddingTop: 8}}>

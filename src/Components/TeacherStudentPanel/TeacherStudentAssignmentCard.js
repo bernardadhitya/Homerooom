@@ -30,12 +30,12 @@ const TeacherStudentAssignmentCard = () => {
       </View>
       <View style={styles.row}>
         <View style={styles.col}>
-          <Text style={{fontSize: 36}}>10</Text>
+          <Text style={{fontSize: 36}}>1</Text>
           <Text style={{fontFamily: 'Regular', fontSize: 12}}>Submitted</Text>
         </View>
         <View style={{padding: 16}}></View>
         <View style={styles.col}>
-          <Text style={{fontSize: 36}}>5</Text>
+          <Text style={{fontSize: 36}}>0</Text>
           <Text style={{fontFamily: 'Regular', fontSize: 12}}>Graded</Text>
         </View>
       </View>

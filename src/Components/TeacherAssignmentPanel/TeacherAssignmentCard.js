@@ -7,6 +7,7 @@ import { AppLoading } from 'expo';
 import CharacterMrTeacher from '../../Assets/characters/CharacterMrTeacher';
 import IconMenu from '../../Assets/icons/IconMenu';
 import { Colors } from '../../Constants/Colors';
+import { Characters } from '../../Constants/Characters';
 
 const TeacherAssignmentCard = (props) => {
   const { classData, assignmentData } = props;
@@ -66,7 +67,7 @@ const TeacherAssignmentCard = (props) => {
       }}>
         <View style={styles.row}>
           <View>
-            <CharacterMrTeacher/>
+            { Characters[classData.avatar] || Characters[0] }
           </View>
           <View style={styles.center}>
             <Text style={{fontFamily: 'Bold', fontSize: 16}}>{subject} - {name}</Text>

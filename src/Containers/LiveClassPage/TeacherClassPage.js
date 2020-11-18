@@ -10,6 +10,7 @@ import TeacherClassCard from '../../Components/HomePanel/TeacherClassCard';
 import AssignmentTabButton from '../../Components/AssignmentPanel/AssignmentTabButton';
 import TeacherClassAssignmentPanel from '../../Components/TeacherClassAssignmentPanel/TeacherClassAssignmentPanel';
 import TeacherClassStudentPanel from '../../Components/TeacherClassStudentPanel/TeacherClassStudentPanel';
+import TeacherClassGamePanel from '../../Components/TeacherClassGamePanel/TeacherClassGamePanel';
 import { FloatingAction } from 'react-native-floating-action';
 import Animated from 'react-native-reanimated';
 import { useMemoOne } from 'use-memo-one';
@@ -18,6 +19,8 @@ import { Layout } from '@ui-kitten/components';
 import CreateAssignmentForm from '../../Components/TeacherClassAssignmentPanel/CreateAssignmentForm';
 import AddStudentForm from '../../Components/TeacherClassStudentPanel/AddStudentForm';
 import { addStudent, getClassById } from '../../../firebase';
+import { Colors } from '../../Constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 
 const actions = [
@@ -29,7 +32,8 @@ const actions = [
   }
 ];
 
-const TeacherClassPage = ({navigation, route}) => {
+const TeacherClassPage = ({route}) => {
+  const navigation = useNavigation();
   const { classId } = route.params;
   const [selectedTab, setSelectedTab] = useState('assignments');
   let [fontsLoaded] = useFonts(Fonts);
@@ -49,8 +53,8 @@ const TeacherClassPage = ({navigation, route}) => {
 
   const renderContent = () => {
     const forms = {
-      assignments: <CreateAssignmentForm/>,
-      students: <AddStudentForm/>
+      assignments: <CreateAssignmentForm classData={classData}/>,
+      students: <AddStudentForm classData={classData}/>
     }
     return (
       <Layout
@@ -88,7 +92,16 @@ const TeacherClassPage = ({navigation, route}) => {
           assignments={assignments}
           classId={classId}
         />,
-      students: <TeacherClassStudentPanel students={students}/>
+      students:
+        <TeacherClassStudentPanel
+          students={students}
+          classId={classId}
+        />,
+      games:
+        <TeacherClassGamePanel
+          classId={classId}
+        />
+      
     }
     return panels[selectedTab] || <Text>{selectedTab}</Text>
   }
@@ -153,6 +166,19 @@ const TeacherClassPage = ({navigation, route}) => {
           <View>
             <TeacherClassCard classData={classData}/>
           </View>
+          <TouchableOpacity
+            style={{
+              backgroundColor: Colors['red'],
+              paddingHorizontal: 10,
+              paddingTop: 10,
+              alignItems: 'center',
+              borderRadius: 8,
+              marginBottom: 10
+            }}
+            onPress={() => {navigation.navigate('LiveClass', { classData })}}
+          >
+            <Text style={{ fontFamily: 'Bold', fontSize: 16, color: '#ffffff' }}>Live Now</Text>
+          </TouchableOpacity>
           <View style={{
             backgroundColor: '#EAEAEA',
             borderRadius: 8,
@@ -169,7 +195,13 @@ const TeacherClassPage = ({navigation, route}) => {
         </ScrollView>
         <FloatingAction
           actions={actions}
-          onPressItem={() => sheetRef.current.snapTo(0)}
+          onPressItem={() => {
+            if (selectedTab === 'games'){
+              navigation.navigate('Game', { classData: classData });
+            } else {
+              sheetRef.current.snapTo(0);
+            }
+          }}
           overrideWithAction={true}
           color='#FFFFFF'
           shadow={{

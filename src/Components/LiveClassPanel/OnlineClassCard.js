@@ -5,23 +5,23 @@ import { Layout } from '@ui-kitten/components';
 import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
 import CharacterMrTeacher from '../../Assets/characters/CharacterMrTeacher';
+import { Characters } from '../../Constants/Characters';
 
 const OnlineClassCard = (props) => {
-  const { online } = props;
+  const { className, color, avatar, online } = props;
   let [fontsLoaded] = useFonts(Fonts);
 
   return fontsLoaded ? (
     <Layout style={styles.row} level='3'>
       <Layout style={styles.column} level='3'>
-        
-        <View style={{backgroundColor: '#FDD444', borderRadius: 10}}>
+        <View style={{backgroundColor: color, borderRadius: 10, marginTop: 14}}>
           <View style={styles.row}>
             <View>
-              <CharacterMrTeacher/>
+              { Characters[avatar] }
             </View>
             <View style={styles.center}>
-              <Text style={{fontFamily: 'Bold', fontSize: 16}}>Mathematics</Text>
-              <Text style={{fontFamily: 'Regular', fontSize: 10}}>Mr Wishnu</Text>
+              <Text style={{fontFamily: 'Bold', fontSize: 16}}>{className}</Text>
+              <Text style={{fontFamily: 'Regular', fontSize: 10}}>Naomi</Text>
               <View style={{flexDirection:'row', flexWrap:'wrap'}}>
                 <View style={{
                   padding: 4,

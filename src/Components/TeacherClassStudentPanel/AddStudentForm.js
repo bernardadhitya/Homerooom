@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFonts } from '@use-expo/font';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Layout, Select, SelectItem } from '@ui-kitten/components';
 import { Fonts } from '../../Constants/Fonts';
 import { AppLoading } from 'expo';
+import { addStudentToClassById, getAllStudents } from '../../../firebase';
 
 const data = [
   'Bernard',
@@ -12,12 +13,34 @@ const data = [
   'Jasmine'
 ];
 
-const AddStudentForm = () => {
+const AddStudentForm = (props) => {
+  const { classData: classId } = props;
   const [selectedStudents, setSelectedStudents] = useState([]);
   let [fontsLoaded] = useFonts(Fonts);
+  const [allStudents, setAllStudents] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedAllStudents = await getAllStudents();
+      console.log(fetchedAllStudents);
+      setAllStudents(fetchedAllStudents);
+    };
+    fetchData();
+  }, []);
+
+  const clearStates = () => {
+    setSelectedStudents([]);
+  }
+
+  const submitAddStudentForm = async () => {
+    const selectedStudentsId = selectedStudents.map(({row}) => (allStudents[row].user_id));
+    clearStates();
+    return await addStudentToClassById(selectedStudentsId, classId);
+    //return await createClass(newClass);
+  }
 
   const displayValue = () => {
-    const selectedStudentsName = selectedStudents.map(({row}) => (data[row]));
+    const selectedStudentsName = selectedStudents.map(({row}) => (allStudents[row].name));
     return <Text>{selectedStudentsName.join(', ')}</Text>;
   };
 
@@ -38,7 +61,7 @@ const AddStudentForm = () => {
           selectedIndex={selectedStudents}
           onSelect={index => setSelectedStudents(index)}
         >
-          {data.map(student => renderStudentsOption(student))}
+          {allStudents.map(student => renderStudentsOption(student.name))}
         </Select>
       </View>
       <TouchableOpacity onPress={() => console.log('pressed')}>

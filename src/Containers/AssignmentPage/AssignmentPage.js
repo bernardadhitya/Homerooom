@@ -11,45 +11,74 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import MySubmissionCard from '../../Components/AssignmentPanel/MySubmissionCard';
 import { useMemoOne } from 'use-memo-one';
-
-const { Bold } = Fonts;
+import { Colors } from '../../Constants/Colors';
 
 const Stack = createStackNavigator();
-
-const AssignedTab = () => {
-  return (
-    <Layout style={{marginTop: 20}}level='3'>
-      <Text style={{fontFamily: 'Bold', fontSize: 16}}>Assigned</Text>
-      <AssignedPanelContent />
-    </Layout>
-  )
-}
-
-const SubmittedTab = () => {
-  return (
-    <Layout style={{marginTop: 20}}level='3'>
-      <Text style={{fontFamily: 'Bold', fontSize: 16}}>Submitted</Text>
-      <AssignedPanelContent />
-    </Layout>
-  )
-}
-
-const GradedTab = () => {
-  return (
-    <Layout style={{marginTop: 20}}level='3'>
-      <Text style={{fontFamily: 'Bold', fontSize: 16}}>Graded</Text>
-      <AssignedPanelContent />
-    </Layout>
-  )
-}
 
 const Feed = () => {
   const [selectedTab, setSelectedTab] = useState('assigned');
   let [fontsLoaded] = useFonts(Fonts);
+  const [assignmentDetails, setAssignmentDetails] = useState({});
 
   let sheetRef = useRef(null);
   let fall = useMemoOne(() => new Animated.Value(1), []);
   
+  const AssignedTab = () => {
+    return (
+      <>
+        <TouchableOpacity onPress={() => {
+          sheetRef.current.snapTo(0)
+        }}
+        >
+          <AssignmentCard
+            className={'Mathematics - Class 1A'}
+            teacherName={'Naomi'}
+            avatar={0}
+            color={Colors.yellow}
+            title={'Exercise page 12-13 no. 1-10'}
+          />
+        </TouchableOpacity>
+        <AssignmentCard
+          className={'Science - Class 6C'}
+          teacherName={'Naomi'}
+          avatar={4}
+          color={Colors.aqua}
+          title={'Do exercise 2A no.1-5'}
+        />
+      </>
+    )
+  }
+
+  const SubmittedTab = () => {
+    return null
+  }
+  
+  const GradedTab = () => {
+    return (
+      <TouchableOpacity onPress={() => {
+        sheetRef.current.snapTo(0)
+      }}
+      >
+        <AssignmentCard
+          className={'Mathematics - Class 1A'}
+          teacherName={'Naomi'}
+          avatar={0}
+          color={Colors.yellow}
+          title={'Exercise page 1-2 no. 1-5'}
+        />
+      </TouchableOpacity>
+    )
+  }
+
+  const renderSelectedTab = () => {
+    const tabsOption = {
+      assigned: <AssignedTab/>,
+      submitted: <SubmittedTab/>,
+      graded: <GradedTab/>
+    }
+    return tabsOption[selectedTab]
+  }
+
   const renderContent = () => (
     <Layout
       style={{
@@ -59,7 +88,14 @@ const Feed = () => {
       }}
     >
       <Text style={{fontFamily: 'Bold', fontSize: 21}}>Assignments</Text>
-      <AssignmentCard detail/>
+      <AssignmentCard
+        className={'Mathematics - Class 1A'}
+        teacherName={'Naomi'}
+        avatar={0}
+        color={Colors.yellow}
+        title={'Exercise page 12-13 no. 1-10'}
+        detail
+      />
       <MySubmissionCard status={selectedTab}/>
     </Layout>
   );
@@ -115,8 +151,7 @@ const Feed = () => {
           renderContent={renderContent}
           borderRadius={16}
         />
-        <ScrollView style={{marginHorizontal: 20}}
-        >
+        <ScrollView style={{marginHorizontal: 20}}>
           <View
             style={{
               flex: 1,
@@ -146,11 +181,7 @@ const Feed = () => {
             }}>
               {selectedTab}
             </Text>
-            <TouchableOpacity onPress={() => sheetRef.current.snapTo(0)}>
-              <AssignmentCard/>
-            </TouchableOpacity>
-            <AssignmentCard/>
-            <AssignmentCard/>
+            { renderSelectedTab() }
           </Layout>
           <View style={{height: 100}}></View>
         </ScrollView>
