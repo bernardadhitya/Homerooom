@@ -5,7 +5,7 @@
 ### 💡 About the App
 Homerooom is an all-in-one mobile app solution for online learning. This app is made to tackle the issues found during COVID-19, where schools have a hard time to adjust with the WFH (work from home) situation.
 
-Senior teachers have a hard time adjusting to multiple online platforms (ex: Zoom, Classroom, Form, Google Drive, etc). Students, especially in primary school, have a hard time keeping track of assignments and video conference links from every subject teachers. Lastly, students tend to have a hard time to focus or being engaged in online class, du to the lack of physical presence and interactions.
+Senior teachers have a hard time adjusting to multiple online platforms (ex: Zoom, Classroom, Form, Google Drive, etc). Students, especially in primary school, have a hard time keeping track of assignments and video conference links from every subject teachers. Lastly, students tend to have a hard time to focus or being engaged in online class, due to the lack of physical presence and interactions.
 
 Therefore, Homerooom is built for students and teachers to have one app to do video conference, remind deadlines and submit assignments.
 
@@ -13,7 +13,7 @@ Another approach to increase engagement is to make games related to the subject 
 
 ### 👀 Preview
 
-##### Onboarding Interface
+###### Onboarding Interface
 ![Onboarding View](src/Assets/screenshots/onboarding.jpg)
 When starting the app, user will be prompetd to sign in or sign up. When signing up, user will see an onboarding screen to get a grasp of Homerooom. User will then create their account, and specify their user type; as a student or teacher.
 
