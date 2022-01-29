@@ -2,13 +2,13 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 var firebaseConfig = {
-  apiKey: "AIzaSyAYK-07NKEdZWrJyXpVIVwwtRUWKMFd4as",
+  apiKey: "***",
   authDomain: "homerooom-service.firebaseapp.com",
   databaseURL: "https://homerooom-service.firebaseio.com",
   projectId: "homerooom-service",
   storageBucket: "homerooom-service.appspot.com",
-  messagingSenderId: "459688961503",
-  appId: "1:459688961503:web:bcc57b4ca35164b45c106a"
+  messagingSenderId: "***",
+  appId: "***"
 };
 
 firebase.initializeApp(firebaseConfig);
